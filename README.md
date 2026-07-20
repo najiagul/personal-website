@@ -1,8 +1,8 @@
 # najiagul.com
 
-Landing page + blog for Najia Gul — fractional product management for AI teams.
-Built with [Astro](https://astro.build), styled by hand (no CSS framework),
-fonts self-hosted (Nunito, Karla, Caveat).
+Personal site for Najia Gul — fractional product management for AI teams.
+Built with [Astro](https://astro.build), styled by hand, Inter self-hosted.
+Single page for now; the blog is a future addition.
 
 ## Working on the site
 
@@ -13,12 +13,11 @@ npm run build    # production build into dist/
 npm run preview  # serve the production build locally
 ```
 
-## Writing a blog post
+## Adding your photo
 
-Add a markdown file to `src/content/blog/` — the filename becomes the URL.
-See `src/content/blog/_how-to-write-a-post.md` for the frontmatter format
-(files starting with `_` never publish). Push to `main` and the site
-rebuilds and deploys on its own.
+Drop an image into `public/` (e.g. `public/najia.jpg`), then open
+`src/pages/index.astro`, find the `photo slot` comment in the middle
+column, and paste in the `<img>` line shown there.
 
 ## Going live (one-time setup)
 

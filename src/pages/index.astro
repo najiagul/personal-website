@@ -1,0 +1,187 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base
+  title="Najia Gul — I help AI teams create delightful products"
+  description="Fractional product management for early-stage teams shipping AI products. I close the gap between what users want to achieve and how easily your product lets them — and build the evals to measure it."
+>
+  <!-- ============ hero ============ -->
+  <section class="wrap hero">
+    <span class="hand hello">hi, I'm Najia —</span>
+    <h1>
+      I help AI teams create
+      <span class="squig">delightful<svg viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true"><path d="M4 14 C 40 4, 70 22, 105 12 S 175 4, 210 14 S 270 20, 296 10" /></svg></span>
+      products.
+    </h1>
+    <p class="sub">
+      A fractional product manager for early-stage teams shipping AI. I close the gap between
+      what your users want to achieve and how easily your product lets them — and I build the
+      evals that tell you whether each release shrank that gap.
+    </p>
+    <div class="cta-row">
+      <a class="btn" href="mailto:najiagul.2000@gmail.com?subject=Working%20together">Email me</a>
+      <a class="link-quiet" href="/blog/">Read the blog</a>
+    </div>
+    <span class="hand hand--teal note">that button opens my actual inbox — no funnel behind it</span>
+  </section>
+
+  <!-- ============ the gap ============ -->
+  <section class="wrap reveal">
+    <div class="card gap-card">
+      <span class="hand label">the gap</span>
+      <h2>Most AI products don't fail at the model.</h2>
+      <p>
+        They fail in the gap between what a user came to do and the work your product makes
+        them do to get there. Demos hide that gap. Dashboards don't measure it. Users feel it
+        inside five minutes — and they don't file a ticket, they leave.
+      </p>
+      <p>
+        I've watched this from both sides: as a data scientist shipping models into enterprise
+        products, and as a product manager deciding what ships at all. The teams that win
+        aren't the ones with the best model. They're the ones who notice the gap first —
+        because they measure it.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ how I help ============ -->
+  <section class="wrap work reveal" id="work">
+    <span class="hand label">how I help</span>
+    <h2>Fractional product management, built for AI teams</h2>
+    <p class="lede">
+      You get a PM a few days a week who has shipped inside fast-paced product organisations
+      and doesn't need the AI part explained. Depending on where you are, that looks like:
+    </p>
+
+    <div class="offers">
+      <div class="offer reveal">
+        <h3>Find the gap</h3>
+        <p>
+          User interviews, session recordings, and your own usage data — turned into a ranked
+          list of where users stall, give up, or route around your product. Not a 40-page
+          report. A list your team can start on Monday.
+        </p>
+      </div>
+      <div class="offer reveal">
+        <h3>Ship like a product org</h3>
+        <p>
+          Clear specs, small releases, tight loops between product and engineering. I've
+          worked inside enterprise product machines — I bring the cadence without the
+          bureaucracy.
+        </p>
+      </div>
+      <div class="offer offer--star reveal">
+        <span class="hand star-note">where I'm most useful</span>
+        <h3>Measure what you ship</h3>
+        <p>
+          Eval systems for your AI features: what "good" means for each one, written down and
+          runnable. So when someone asks whether the new model actually made things better,
+          the answer takes minutes — not a meeting.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ why me ============ -->
+  <section class="wrap why reveal">
+    <span class="hand label">why me</span>
+    <h2>I've been the data scientist and the PM.</h2>
+    <p>
+      Before product, I was a data scientist and AI consultant at IBM, taking machine-learning
+      systems from ambiguous business question to production for enterprise clients. Now I'm a
+      product manager at SAP, where I build evaluation frameworks that help engineering teams
+      ship faster — alongside a master's in data science and AI. I love telling stories backed
+      by data.
+    </p>
+    <p>
+      When your ML engineer and your designer disagree about what to build next, I'm useful in
+      that room.
+    </p>
+  </section>
+
+  <!-- ============ final CTA ============ -->
+  <section class="wrap reveal">
+    <div class="card cta-card">
+      <h2>Building an AI product, and shipping feels like guessing?</h2>
+      <p>
+        Tell me what you're building and where it hurts. If I can help, I'll say how. If I
+        can't, I'll say that too.
+      </p>
+      <div class="cta-row">
+        <a class="btn" href="mailto:najiagul.2000@gmail.com?subject=Working%20together">Email me</a>
+        <span class="plain-email">or write to <a class="link-quiet" href="mailto:najiagul.2000@gmail.com">najiagul.2000@gmail.com</a></span>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  section { margin-top: 72px; }
+  .hero { margin-top: 60px; padding-top: 28px; }
+
+  .hello { font-size: 1.5rem; margin-bottom: 14px; }
+  h1 {
+    font-size: clamp(2.5rem, 5.2vw, 3.8rem);
+    max-width: 16ch;
+  }
+  .sub {
+    margin-top: 28px;
+    font-size: 1.1rem;
+    max-width: 56ch;
+    color: var(--body);
+  }
+  .cta-row {
+    margin-top: 38px;
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .note { font-size: 1.25rem; margin-top: 22px; }
+
+  .label { font-size: 1.4rem; margin-bottom: 14px; }
+
+  h2 { font-size: 1.85rem; max-width: 24ch; }
+  section p { margin-top: 20px; max-width: 58ch; color: var(--body); }
+
+  .gap-card { padding: 44px 46px; }
+
+  .lede { margin-top: 20px; }
+  .offers {
+    margin-top: 36px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+  }
+  .offer {
+    background: var(--card);
+    border: 2px solid var(--ink);
+    border-radius: 16px;
+    padding: 26px 26px 30px;
+    box-shadow: 4px 4px 0 rgba(46, 42, 36, 0.15);
+    position: relative;
+  }
+  .offer h3 { font-size: 1.2rem; }
+  .offer p { margin-top: 12px; font-size: 0.97rem; }
+  .offer--star { box-shadow: 4px 4px 0 var(--teal); }
+  .star-note {
+    position: absolute;
+    top: -16px;
+    right: 18px;
+    font-size: 1.15rem;
+    background: var(--creme);
+    padding: 0 8px;
+  }
+
+  .cta-card { padding: 44px 46px; }
+  .plain-email { color: var(--muted); font-size: 0.95rem; }
+
+  @media (max-width: 800px) {
+    .offers { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 640px) {
+    section { margin-top: 56px; }
+    .gap-card, .cta-card { padding: 32px 26px; }
+  }
+</style>

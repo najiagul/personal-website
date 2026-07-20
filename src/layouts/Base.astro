@@ -1,0 +1,118 @@
+---
+import '@fontsource/nunito/800.css';
+import '@fontsource/karla/400.css';
+import '@fontsource/karla/500.css';
+import '@fontsource/karla/700.css';
+import '@fontsource/caveat/600.css';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <script is:inline>document.documentElement.classList.add('js');</script>
+  </head>
+  <body>
+    <header class="wrap">
+      <nav>
+        <a class="logo" href="/">Najia Gul</a>
+        <span class="links">
+          <a class="navlink" href="/#work">Work with me</a>
+          <a class="navlink" href="/blog/">Blog</a>
+          <a class="btn btn--small" href="mailto:najiagul.2000@gmail.com?subject=Working%20together">Email me</a>
+        </span>
+      </nav>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="wrap">
+      <div class="foot-inner">
+        <span>© {new Date().getFullYear()} Najia Gul</span>
+        <span class="foot-links">
+          <a href="https://www.linkedin.com/in/najia-gul">LinkedIn</a>
+          <a href="https://github.com/najiagul">GitHub</a>
+          <a href="/blog/">Blog</a>
+        </span>
+      </div>
+    </footer>
+
+    <script>
+      // Reveal sections as they scroll into view; motion gating lives in CSS.
+      const els = document.querySelectorAll('.reveal');
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (e.isIntersecting) {
+              e.target.classList.add('in');
+              io.unobserve(e.target);
+            }
+          }
+        },
+        { threshold: 0.15 }
+      );
+      els.forEach((el) => io.observe(el));
+    </script>
+
+    <style>
+      nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 26px 0;
+      }
+      .logo {
+        font-family: var(--font-display);
+        font-weight: 800;
+        font-size: 1.2rem;
+        text-decoration: none;
+      }
+      .links { display: flex; gap: 26px; align-items: center; }
+      .navlink {
+        font-weight: 500;
+        font-size: 0.95rem;
+        text-decoration: none;
+      }
+      .navlink:hover { color: var(--coral); }
+      @media (max-width: 520px) {
+        .navlink:first-child { display: none; }
+        .links { gap: 18px; }
+      }
+
+      footer { margin-top: 40px; }
+      .foot-inner {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        flex-wrap: wrap;
+        padding: 30px 0 42px;
+        font-size: 0.9rem;
+        color: var(--muted);
+      }
+      .foot-links { display: flex; gap: 22px; }
+      .foot-inner a { color: inherit; font-weight: 500; }
+      .foot-inner a:hover { color: var(--coral); }
+    </style>
+  </body>
+</html>

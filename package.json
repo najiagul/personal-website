@@ -1,0 +1,18 @@
+{
+  "name": "najiagul-website",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.3",
+    "@fontsource/caveat": "^5.2.5",
+    "@fontsource/karla": "^5.2.5",
+    "@fontsource/nunito": "^5.2.5",
+    "astro": "^5.12.0"
+  }
+}

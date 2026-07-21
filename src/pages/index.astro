@@ -5,12 +5,12 @@ const work = [
   {
     when: '2024 — now',
     role: 'Product Manager, SAP',
-    note: 'adoption, churn & portfolio analytics; eval frameworks that let engineering ship faster',
+    note: 'adoption & portfolio analytics, eval frameworks, and enabling PMs to make AI part of their everyday product work',
   },
   {
     when: '2022 — 24',
     role: 'Data Scientist & AI Consultant, IBM',
-    note: 'machine learning end-to-end for enterprise clients — from ambiguous question to production',
+    note: 'machine learning for enterprise clients — surfacing the insights hiding in their data and shipping models to production',
   },
   {
     when: '2024 — now',
@@ -21,16 +21,28 @@ const work = [
 
 const help = [
   {
+    what: 'Immersion',
+    how: 'the first weeks go deep into your product, users, and metrics — so everything after rests on your context, not a playbook I brought along',
+  },
+  {
+    what: 'Weekly rhythm',
+    how: 'one fixed session a week for priorities, feedback, and what shipped — and async access in between, because product questions rarely wait for meetings',
+  },
+  {
     what: 'Find where users stall',
     how: 'interviews and your own usage data, turned into a ranked list of fixes your team can start on Monday',
   },
   {
-    what: 'Ship at product-org cadence',
-    how: 'small releases, clear specs, tight loops with engineering — without the enterprise bureaucracy',
+    what: 'Specs that ship',
+    how: 'small, tightly scoped releases, written so engineering can start building without a clarification round',
   },
   {
-    what: 'Measure everything',
-    how: 'a runnable definition of "good" for every AI feature, so "did the model update help?" takes minutes to answer, not a meeting',
+    what: 'Evals from day one',
+    how: 'a runnable definition of "good" for every AI feature, so "did the model update help?" takes minutes to answer — and the suite keeps working for your team long after the engagement ends',
+  },
+  {
+    what: 'AI in daily work',
+    how: 'hands-on enablement for your PMs and designers: workflows, prompting, and evaluation habits that make AI part of how the team works, not a demo',
   },
 ];
 ---
@@ -50,13 +62,21 @@ const help = [
     </header>
 
     <section class="intro fade" style="--stagger: 1">
-      <h1>I'm a product manager who used to build the&nbsp;models.</h1>
-      <p>
-        I work with early-stage AI teams as a fractional PM. Most AI products lose their users
-        in the distance between what someone came to do and what the product made them do
-        instead — my work is finding that distance, closing it, and building the evals that
-        show whether each release actually helped.
-      </p>
+      <div class="intro-text">
+        <h1>I work where product meets&nbsp;AI.</h1>
+        <p>
+          I'm a fractional product manager for early-stage AI teams — and a former data
+          scientist, so the AI part doesn't need explaining. Most AI products lose users in
+          the gap between what people are trying to do and what the product actually helps
+          them do. My work is finding that gap, closing it, and building the evals that show
+          whether each release actually helped.
+        </p>
+      </div>
+      <!--
+        photo: drop an image into public/ (e.g. public/najia.jpg), then replace
+        this comment with (keep the path relative so it works on staging and live):
+        <img class="photo" src="najia.jpg" alt="Najia Gul" width="440" height="560" />
+      -->
     </section>
 
     <section class="fade" style="--stagger: 2">
@@ -77,7 +97,7 @@ const help = [
     </section>
 
     <section class="fade" style="--stagger: 3">
-      <span class="label">For your team</span>
+      <span class="label">Working together</span>
       <ul class="ledger">
         {
           help.map((h) => (
@@ -95,21 +115,14 @@ const help = [
     <section class="outro fade" style="--stagger: 4">
       <span class="label">Contact</span>
       <p>
-        If you're building with AI and want a PM who can argue with both the designer and the
-        model, write to me — <a href="mailto:najiagul.2000@gmail.com">najiagul.2000@gmail.com</a>.
-        Currently open to fractional engagements.
+        Currently open to fractional engagements — write to me at
+        <a href="mailto:najiagul.2000@gmail.com">najiagul.2000@gmail.com</a>.
       </p>
     </section>
 
-    <!--
-      photo: drop an image into public/ (e.g. public/najia.jpg) and add inside .intro
-      (keep the path relative so it works on staging and the real domain):
-      <img class="photo" src="najia.jpg" alt="Najia Gul" />
-    -->
-
     <footer class="fade" style="--stagger: 5">
       <span>© {new Date().getFullYear()}</span>
-      <span>Saarbrücken, Germany</span>
+      <span>Based in Germany</span>
     </footer>
   </div>
 </Base>
@@ -144,7 +157,23 @@ const help = [
   }
   nav a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 4px; }
 
-  .intro { padding: 12vh 0 0; }
+  .intro {
+    padding: 12vh 0 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 44px;
+  }
+  .intro-text { flex: 1; }
+  /* framed like a mounted print: hairline mat + ink border */
+  .intro :global(.photo) {
+    width: 176px;
+    height: auto;
+    flex-shrink: 0;
+    border: 1px solid var(--ink);
+    padding: 7px;
+    background: #fff;
+    margin-top: 8px;
+  }
   h1 {
     font-family: var(--font-serif);
     font-weight: 500;
@@ -208,7 +237,8 @@ const help = [
   }
 
   @media (max-width: 560px) {
-    .intro { padding-top: 7vh; }
+    .intro { padding-top: 7vh; flex-direction: column-reverse; gap: 28px; }
+    .intro :global(.photo) { width: 140px; margin-top: 0; }
     section + section { margin-top: 56px; }
     .intro + section { margin-top: 64px; }
     .ledger li { grid-template-columns: 1fr; gap: 6px; }

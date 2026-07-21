@@ -19,17 +19,29 @@ Drop an image into `public/` (e.g. `public/najia.jpg`), then open
 `src/pages/index.astro`, find the `photo slot` comment in the middle
 column, and paste in the `<img>` line shown there.
 
-## Going live (one-time setup)
+## Staging preview (current state)
 
-The site deploys to GitHub Pages via `.github/workflows/deploy.yml` on every
-push to `main`. Two things only you can do:
+The repo is configured for a **staging deploy** at
+`https://najiagul.github.io/personal-website` — najiagul.com and the old
+Hashnode blog are untouched until you do the launch steps below.
 
-**1. Enable GitHub Pages**
+To get the staging URL live (one-time):
 
-- Repo → Settings → Pages → "Build and deployment" → Source: **GitHub Actions**.
-- Merge this branch to `main` (or push to `main`) — the first deploy runs
-  automatically. The site appears at `najiagul.github.io/personal-website`
-  until the domain is connected.
+1. Merge this branch into `main`.
+2. Repo → Settings → Pages → "Build and deployment" → Source:
+   **GitHub Actions**.
+
+After that, every push to `main` redeploys automatically via
+`.github/workflows/deploy.yml`.
+
+## Going live on najiagul.com (when you're ready)
+
+**1. Switch the repo from staging to the real domain**
+
+- In `astro.config.mjs`: set `site: 'https://najiagul.com'` and delete the
+  `base` line.
+- Create `public/CNAME` containing exactly one line: `najiagul.com`
+- Push to `main`.
 
 **2. Point najiagul.com away from Hashnode**
 
@@ -41,8 +53,7 @@ At your DNS provider (wherever you manage najiagul.com):
 - Add a **CNAME record** for `www` → `najiagul.github.io`
 - Back in Repo → Settings → Pages, set **Custom domain** to `najiagul.com`
   and tick **Enforce HTTPS** once the DNS check passes (can take up to a
-  few hours). The `public/CNAME` file in this repo keeps the domain
-  attached across deploys.
+  few hours).
 
 Heads-up: the moment DNS switches, the old Hashnode blog stops being
 reachable at najiagul.com.

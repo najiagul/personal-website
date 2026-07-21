@@ -1,11 +1,12 @@
 /* ---------- tokens ---------- */
 :root {
-  --bg: #FCFBF8;
-  --ink: #1A1815;
-  --soft: #706B62;
-  --hairline: #E6E3DC;
-  --font-serif: 'Newsreader Variable', Georgia, 'Times New Roman', serif;
-  --font-sans: 'Inter Variable', 'Inter', -apple-system, 'Helvetica Neue', Arial, sans-serif;
+  --bg: #F4F3EE;
+  --ink: #141414;
+  --soft: #6E6E6E;
+  --hairline: #E3E2DD;
+  /* neo-grotesque, Helvetica-forward; falls back to self-hosted Inter */
+  --font-sans: 'Helvetica Neue', 'Inter Variable', 'Inter', Arial, sans-serif;
+  --font-serif: var(--font-sans);
 }
 
 /* ---------- reset ---------- */

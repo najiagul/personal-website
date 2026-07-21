@@ -4,8 +4,9 @@
   --ink: #0A0A0A;
   --soft: #6E6E6E;
   --hairline: #EAEAEA;
-  /* neo-grotesque, Helvetica-forward; falls back to self-hosted Inter */
-  --font-sans: 'Helvetica Neue', 'Inter Variable', 'Inter', Arial, sans-serif;
+  /* Neue Haas Grotesk is licensed; closest free match is a self-hosted
+     Helvetica clone (Arimo), consistent across devices */
+  --font-sans: 'Arimo Variable', 'Helvetica Neue', Arial, sans-serif;
   --font-serif: var(--font-sans);
 }
 

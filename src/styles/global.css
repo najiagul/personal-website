@@ -1,9 +1,9 @@
 /* ---------- tokens ---------- */
 :root {
-  --bg: #F4F4F2;
-  --ink: #141414;
+  --bg: #FFFFFF;
+  --ink: #0A0A0A;
   --soft: #6E6E6E;
-  --hairline: #E5E5E2;
+  --hairline: #EAEAEA;
   /* neo-grotesque, Helvetica-forward; falls back to self-hosted Inter */
   --font-sans: 'Helvetica Neue', 'Inter Variable', 'Inter', Arial, sans-serif;
   --font-serif: var(--font-sans);

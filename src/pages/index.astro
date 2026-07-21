@@ -70,11 +70,15 @@ const help = [
           it, and building the evals that show whether each release actually helped.
         </p>
       </div>
-      <!--
-        photo: drop an image into public/ (e.g. public/najia.jpg), then replace
-        this comment with (keep the path relative so it works on staging and live):
-        <img class="photo" src="najia.jpg" alt="Najia Gul" width="440" height="560" />
-      -->
+      <figure class="polaroid">
+        <img
+          class="photo"
+          src="najia.jpg"
+          alt="Najia Gul, sitting on a park bench under green trees"
+          width="450"
+          height="600"
+        />
+      </figure>
     </section>
 
     <section class="fade" style="--stagger: 2">
@@ -167,15 +171,29 @@ const help = [
     gap: 44px;
   }
   .intro-text { flex: 1; }
-  /* framed like a mounted print: hairline mat + ink border */
-  .intro :global(.photo) {
-    width: 176px;
-    height: auto;
+  /* polaroid: white card, thicker bottom lip, soft shadow, gentle tilt */
+  .polaroid {
     flex-shrink: 0;
-    border: 1px solid var(--ink);
-    padding: 7px;
-    background: #fff;
+    width: 196px;
     margin-top: 8px;
+    padding: 11px 11px 34px;
+    background: #fff;
+    border: 1px solid var(--hairline);
+    box-shadow:
+      0 12px 28px rgba(26, 24, 21, 0.15),
+      0 2px 6px rgba(26, 24, 21, 0.08);
+    transform: rotate(-2.4deg);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  }
+  .polaroid:hover {
+    transform: rotate(0deg) scale(1.015);
+    box-shadow:
+      0 18px 40px rgba(26, 24, 21, 0.18),
+      0 3px 8px rgba(26, 24, 21, 0.1);
+  }
+  .intro :global(.photo) {
+    width: 100%;
+    height: auto;
   }
   h1 {
     font-family: var(--font-serif);
@@ -239,7 +257,7 @@ const help = [
 
   @media (max-width: 560px) {
     .intro { padding-top: 7vh; flex-direction: column-reverse; gap: 28px; }
-    .intro :global(.photo) { width: 140px; margin-top: 0; }
+    .polaroid { width: 168px; margin-top: 0; }
     section + section { margin-top: 56px; }
     .intro + section { margin-top: 64px; }
     .ledger li { grid-template-columns: 1fr; gap: 6px; }

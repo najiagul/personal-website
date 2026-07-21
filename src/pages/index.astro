@@ -10,7 +10,7 @@ const work = [
   {
     when: '2022 — 24',
     role: 'Data Scientist & AI Consultant, IBM',
-    note: 'machine learning for enterprise clients — surfacing the insights hiding in their data and shipping models to production',
+    note: 'end-to-end machine learning for enterprise clients — finding insights in their data and shipping models to production',
   },
   {
     when: '2024 — now',
@@ -22,11 +22,7 @@ const work = [
 const help = [
   {
     what: 'Immersion',
-    how: 'the first weeks go deep into your product, users, and metrics — so everything after rests on your context, not a playbook I brought along',
-  },
-  {
-    what: 'Weekly rhythm',
-    how: 'one fixed session a week for priorities, feedback, and what shipped — and async access in between, because product questions rarely wait for meetings',
+    how: 'the first weeks go deep into your product, users, and metrics — so everything after rests on your context',
   },
   {
     what: 'Find where users stall',
@@ -41,8 +37,8 @@ const help = [
     how: 'a runnable definition of "good" for every AI feature, so "did the model update help?" takes minutes to answer — and the suite keeps working for your team long after the engagement ends',
   },
   {
-    what: 'AI in daily work',
-    how: 'hands-on enablement for your PMs and designers: workflows, prompting, and evaluation habits that make AI part of how the team works, not a demo',
+    what: 'Hands-on when it helps',
+    how: "I don't stay in the doc — when the team is stretched, I build alongside your engineers: prototypes, eval pipelines, the plumbing around the model",
   },
 ];
 ---
@@ -53,7 +49,10 @@ const help = [
 >
   <div class="sheet">
     <header class="fade" style="--stagger: 0">
-      <span class="name">Najia Gul</span>
+      <span class="ident">
+        <span class="name">Najia Gul</span>
+        <span class="where">✦ Based in Germany</span>
+      </span>
       <nav>
         <a href="mailto:najiagul.2000@gmail.com">email</a>
         <a href="https://www.linkedin.com/in/najia-gul">linkedin</a>
@@ -66,10 +65,9 @@ const help = [
         <h1>I work where product meets&nbsp;AI.</h1>
         <p>
           I'm a fractional product manager for early-stage AI teams — and a former data
-          scientist, so the AI part doesn't need explaining. Most AI products lose users in
-          the gap between what people are trying to do and what the product actually helps
-          them do. My work is finding that gap, closing it, and building the evals that show
-          whether each release actually helped.
+          scientist. Most AI products lose users in the gap between what people are trying to
+          do and what the product actually helps them do. My work is finding that gap, closing
+          it, and building the evals that show whether each release actually helped.
         </p>
       </div>
       <!--
@@ -121,8 +119,7 @@ const help = [
     </section>
 
     <footer class="fade" style="--stagger: 5">
-      <span>© {new Date().getFullYear()}</span>
-      <span>Based in Germany</span>
+      <span>© {new Date().getFullYear()} Najia Gul</span>
     </footer>
   </div>
 </Base>
@@ -143,11 +140,17 @@ const help = [
     align-items: baseline;
     padding: 34px 0;
   }
+  .ident { display: flex; flex-direction: column; gap: 2px; }
   .name {
     font-family: var(--font-serif);
     font-weight: 600;
     font-size: 1.15rem;
     letter-spacing: 0.005em;
+  }
+  .where {
+    font-size: 0.78rem;
+    color: var(--soft);
+    letter-spacing: 0.02em;
   }
   nav { display: flex; gap: 22px; }
   nav a {
@@ -221,10 +224,8 @@ const help = [
 
   .outro p {
     margin-top: 18px;
-    font-family: var(--font-serif);
-    font-size: 1.25rem;
-    line-height: 1.45;
-    max-width: 34em;
+    font-size: 1.02rem;
+    max-width: 60ch;
   }
 
   footer {

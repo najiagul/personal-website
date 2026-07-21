@@ -1,111 +1,124 @@
 ---
 import Base from '../layouts/Base.astro';
 
-const facts = [
+const work = [
   {
-    num: '01',
-    title: 'fractional pm — for ai teams',
-    items: [
-      'i help early-stage teams ship ai features users actually adopt',
-      'evals: i build the systems that measure whatever you ship',
-    ],
+    when: '2024 — now',
+    role: 'Product Manager, SAP',
+    note: 'adoption, churn & portfolio analytics; eval frameworks that let engineering ship faster',
   },
   {
-    num: '02',
-    title: 'product manager @ sap',
-    items: [
-      'portfolio analysis: adoption, churn, financials → quarterly decisions',
-      'eval frameworks so engineering ships faster',
-    ],
+    when: '2022 — 24',
+    role: 'Data Scientist & AI Consultant, IBM',
+    note: 'machine learning end-to-end for enterprise clients — from ambiguous question to production',
   },
   {
-    num: '03',
-    title: 'prev. data scientist & ai consultant @ ibm',
-    items: [
-      'ml end-to-end: ambiguous business question → production',
-      '100m-row datasets for enterprise clients [telco, fmcg, banking]',
-    ],
-  },
-  {
-    num: '04',
-    title: 'ms data science & ai',
-    items: ['nlp, trustworthy ml, generative ai'],
+    when: '2024 — now',
+    role: 'MS Data Science & AI, Saarland University',
+    note: 'NLP, trustworthy ML, generative AI',
   },
 ];
 
-const skills = [
-  'product strategy',
-  'ai evals',
-  'user research',
-  'data storytelling',
-  'shipping with engineers',
+const help = [
+  {
+    what: 'Find where users stall',
+    how: 'interviews and your own usage data, turned into a ranked list of fixes your team can start on Monday',
+  },
+  {
+    what: 'Ship at product-org cadence',
+    how: 'small releases, clear specs, tight loops with engineering — without the enterprise bureaucracy',
+  },
+  {
+    what: 'Measure everything',
+    how: 'a runnable definition of "good" for every AI feature, so "did the model update help?" takes minutes to answer, not a meeting',
+  },
 ];
 ---
 
 <Base
   title="Najia Gul — fractional product manager for AI teams"
-  description="product manager & former data scientist. i help early-stage teams ship ai features users actually adopt — with evals to measure whatever ships."
+  description="Product manager, former data scientist. I work with early-stage AI teams as a fractional PM — and build the evals that show whether each release helped."
 >
-  <div class="page">
-    <header>
-      <span class="name">NAJIA GUL</span>
+  <div class="sheet">
+    <header class="fade" style="--stagger: 0">
+      <span class="name">Najia Gul</span>
       <nav>
-        <a href="https://www.linkedin.com/in/najia-gul">LINKEDIN</a>
-        <a href="https://github.com/najiagul">GITHUB</a>
-        <a href="mailto:najiagul.2000@gmail.com">EMAIL</a>
+        <a href="mailto:najiagul.2000@gmail.com">email</a>
+        <a href="https://www.linkedin.com/in/najia-gul">linkedin</a>
+        <a href="https://github.com/najiagul">github</a>
       </nav>
     </header>
 
-    <div class="grid">
-      <div class="col col-left">
-        <h1 class="fade" style="--stagger: 0">hi!<br />i'm najia.</h1>
-        <p class="thesis fade" style="--stagger: 1">
-          i think deeply about the gap between what users want to achieve &amp; how easily ai
-          products let them — and i believe you can't close a gap you don't measure.
-        </p>
-        <ul class="skills fade" style="--stagger: 3">
-          {skills.map((s) => <li>{s}</li>)}
-        </ul>
-      </div>
+    <section class="intro fade" style="--stagger: 1">
+      <h1>I'm a product manager who used to build the&nbsp;models.</h1>
+      <p>
+        I work with early-stage AI teams as a fractional PM. Most AI products lose their users
+        in the distance between what someone came to do and what the product made them do
+        instead — my work is finding that distance, closing it, and building the evals that
+        show whether each release actually helped.
+      </p>
+    </section>
 
-      <div class="col col-mid fade" style="--stagger: 1">
-        <p class="opener">i'm a pm who used to build the models</p>
+    <section class="fade" style="--stagger: 2">
+      <span class="label">Work</span>
+      <ul class="ledger">
         {
-          facts.map((f) => (
-            <section class="fact">
-              <h2>
-                <span class="num">[{f.num}]</span> {f.title}
-              </h2>
-              <ul>
-                {f.items.map((item) => <li>{item}</li>)}
-              </ul>
-            </section>
+          work.map((w) => (
+            <li>
+              <span class="when">{w.when}</span>
+              <span class="entry">
+                <span class="role">{w.role}</span>
+                <span class="note">{w.note}</span>
+              </span>
+            </li>
           ))
         }
-        <!--
-          photo slot: drop an image into public/ (e.g. public/najia.jpg) and add here
-          (keep the path relative so it works on staging and the real domain):
-          <img class="photo" src="najia.jpg" alt="Najia Gul" />
-        -->
-      </div>
+      </ul>
+    </section>
 
-      <div class="col col-right fade" style="--stagger: 2">
-        <p class="avail">◆ available for fractional work :)</p>
-        <p class="based">☆ based in germany</p>
-        <div class="contact">
-          <a href="mailto:najiagul.2000@gmail.com">najiagul.2000@gmail.com</a>
-          <span class="copy">© {new Date().getFullYear()}</span>
-        </div>
-      </div>
-    </div>
+    <section class="fade" style="--stagger: 3">
+      <span class="label">For your team</span>
+      <ul class="ledger">
+        {
+          help.map((h) => (
+            <li>
+              <span class="when what">{h.what}</span>
+              <span class="entry">
+                <span class="note">{h.how}</span>
+              </span>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="outro fade" style="--stagger: 4">
+      <span class="label">Contact</span>
+      <p>
+        If you're building with AI and want a PM who can argue with both the designer and the
+        model, write to me — <a href="mailto:najiagul.2000@gmail.com">najiagul.2000@gmail.com</a>.
+        Currently open to fractional engagements.
+      </p>
+    </section>
+
+    <!--
+      photo: drop an image into public/ (e.g. public/najia.jpg) and add inside .intro
+      (keep the path relative so it works on staging and the real domain):
+      <img class="photo" src="najia.jpg" alt="Najia Gul" />
+    -->
+
+    <footer class="fade" style="--stagger: 5">
+      <span>© {new Date().getFullYear()}</span>
+      <span>Saarbrücken, Germany</span>
+    </footer>
   </div>
 </Base>
 
 <style>
-  .page {
-    max-width: 1440px;
+  .sheet {
+    max-width: 680px;
     margin: 0 auto;
-    padding: 0 36px;
+    padding: 0 26px;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -114,143 +127,92 @@ const skills = [
   header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding: 28px 0 22px;
+    align-items: baseline;
+    padding: 34px 0;
   }
   .name {
-    font-weight: 700;
-    font-size: 0.95rem;
-    letter-spacing: 0.04em;
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 1.15rem;
+    letter-spacing: 0.005em;
   }
-  nav { display: flex; gap: 28px; }
+  nav { display: flex; gap: 22px; }
   nav a {
-    font-size: 0.8rem;
-    font-weight: 500;
-    letter-spacing: 0.06em;
+    font-size: 0.88rem;
     text-decoration: none;
+    color: var(--soft);
   }
-  nav a:hover { text-decoration: underline; text-underline-offset: 4px; }
+  nav a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 4px; }
 
-  .grid {
-    flex: 1;
-    display: grid;
-    grid-template-columns: 1.1fr 1.25fr 0.85fr;
-    align-items: stretch;
-  }
-
-  .col { padding: 48px 0 40px; }
-  .col-left {
-    display: flex;
-    flex-direction: column;
-    padding-right: 44px;
-  }
-  .col-mid {
-    border-left: 1px solid var(--hairline);
-    border-right: 1px solid var(--hairline);
-    padding-left: 44px;
-    padding-right: 44px;
-  }
-  .col-right {
-    display: flex;
-    flex-direction: column;
-    padding-left: 44px;
-  }
-
-  /* ---- left ---- */
+  .intro { padding: 12vh 0 0; }
   h1 {
-    font-size: clamp(3.2rem, 6.5vw, 5.4rem);
-    font-weight: 700;
-    line-height: 1.0;
-    letter-spacing: -0.04em;
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: clamp(1.9rem, 4.6vw, 2.7rem);
+    line-height: 1.22;
+    letter-spacing: -0.012em;
+    text-wrap: balance;
   }
-  .thesis {
-    margin-top: 40px;
-    font-size: 0.98rem;
-    max-width: 34ch;
-    color: var(--ink);
-  }
-  .skills {
-    list-style: none;
-    margin-top: auto;
-    padding-top: 56px;
-    max-width: 360px;
-  }
-  .skills li {
-    border-top: 1px solid var(--hairline);
-    padding: 10px 0;
-    font-size: 0.95rem;
-  }
-  .skills li:last-child { border-bottom: 1px solid var(--hairline); }
-
-  /* ---- middle ---- */
-  .opener { font-size: 0.95rem; color: var(--soft); }
-  .fact { margin-top: 34px; }
-  .fact h2 {
+  .intro p {
+    margin-top: 26px;
     font-size: 1.02rem;
-    font-weight: 700;
-    letter-spacing: -0.01em;
-    line-height: 1.4;
-  }
-  .fact .num { font-weight: 700; margin-right: 2px; }
-  .fact ul { list-style: none; margin-top: 8px; }
-  .fact li {
-    font-size: 0.95rem;
-    line-height: 1.55;
-    padding-left: 22px;
-    position: relative;
-    margin-top: 6px;
-  }
-  .fact li::before {
-    content: '◉';
-    position: absolute;
-    left: 0;
-    top: 0.05em;
-    font-size: 0.8em;
+    color: var(--ink);
+    max-width: 60ch;
   }
 
-  /* ---- right ---- */
-  .avail { font-size: 0.95rem; }
-  .based { font-size: 0.95rem; margin-top: 14px; }
-  .contact {
-    margin-top: auto;
-    padding-top: 56px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  section + section { margin-top: 76px; }
+  .intro + section { margin-top: 88px; }
+
+  .ledger {
+    list-style: none;
+    margin-top: 18px;
+  }
+  .ledger li {
+    display: grid;
+    grid-template-columns: 168px 1fr;
+    gap: 20px;
+    padding: 16px 0;
+    border-top: 1px solid var(--hairline);
+  }
+  .ledger li:last-child { border-bottom: 1px solid var(--hairline); }
+  .when {
+    font-size: 0.88rem;
+    color: var(--soft);
+    padding-top: 2px;
+    font-variant-numeric: tabular-nums;
+  }
+  .when.what {
+    color: var(--ink);
+    font-weight: 600;
     font-size: 0.92rem;
   }
-  .copy { color: var(--soft); }
+  .entry { display: flex; flex-direction: column; gap: 4px; }
+  .role { font-weight: 600; font-size: 0.98rem; }
+  .note { font-size: 0.92rem; color: var(--soft); max-width: 52ch; }
 
-  /* ---- mobile ---- */
-  @media (max-width: 900px) {
-    .page { padding: 0 22px; }
-    nav { gap: 18px; }
-    .grid { display: flex; flex-direction: column; }
-    .col { padding: 0; }
-    .col-left { display: contents; }
-    h1 { order: 1; padding-top: 28px; }
-    .thesis { order: 2; margin-top: 24px; }
-    .col-mid {
-      order: 3;
-      border: none;
-      border-top: 1px solid var(--hairline);
-      margin-top: 40px;
-      padding: 32px 0 8px;
-    }
-    .opener { margin-top: 0; }
-    .col-right {
-      order: 4;
-      border-top: 1px solid var(--hairline);
-      margin-top: 36px;
-      padding: 32px 0 0;
-    }
-    .skills {
-      order: 5;
-      margin-top: 44px;
-      padding-top: 0;
-      max-width: none;
-      margin-bottom: 40px;
-    }
-    .contact { padding-top: 36px; }
+  .outro p {
+    margin-top: 18px;
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    line-height: 1.45;
+    max-width: 34em;
+  }
+
+  footer {
+    margin-top: auto;
+    padding: 90px 0 36px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.82rem;
+    color: var(--soft);
+  }
+
+  @media (max-width: 560px) {
+    .intro { padding-top: 7vh; }
+    section + section { margin-top: 56px; }
+    .intro + section { margin-top: 64px; }
+    .ledger li { grid-template-columns: 1fr; gap: 6px; }
+    .when { padding-top: 0; }
+    footer { padding-top: 64px; }
   }
 </style>

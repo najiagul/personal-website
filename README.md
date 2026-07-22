@@ -1,7 +1,8 @@
 # najiagul.com
 
 Personal site for Najia Gul — fractional product management for AI teams.
-Built with [Astro](https://astro.build), styled by hand, Inter self-hosted.
+Built with [Astro](https://astro.build), styled by hand, with Crimson Pro,
+Plus Jakarta Sans, and JetBrains Mono self-hosted via Fontsource.
 Single page for now; the blog is a future addition.
 
 ## Working on the site

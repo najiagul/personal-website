@@ -80,7 +80,7 @@ const mottoHalf = Array.from({ length: 4 }, () => mottoPhrases).flat();
     <div class="hero-copy">
       <h1 class="fade-up" style="--delay: 0.1s">
         Hi, I'm Najia — I help teams turn complicated technology into products people can
-        <span class="cycle" data-cycle><span class="cycle-word">understand</span></span>.
+        <span class="cycle" data-cycle><span class="cycle-word" data-cycle-word>understand</span>.</span>
       </h1>
       <p class="hero-sub fade-up" style="--delay: 0.22s">
         Most of my work is translation. I close the gap between the people who build the
@@ -252,18 +252,46 @@ const mottoHalf = Array.from({ length: 4 }, () => mottoPhrases).flat();
 
   /* ---------- hero cycling word ---------- */
   (() => {
-    const holder = document.querySelector('[data-cycle]');
-    if (!holder) return;
+    const cycle = document.querySelector('[data-cycle]');
+    const wordEl = document.querySelector('[data-cycle-word]');
+    if (!cycle || !wordEl) return;
     const words = ['understand', 'trust', 'use', 'love', 'believe in'];
-    let i = 0;
+
+    // Reserve the width of the widest word so the sentence always wraps the
+    // same way — the cycling word stays on the last line instead of hopping
+    // up a line when a shorter word (e.g. "use") is shown.
+    const reserve = () => {
+      const cs = getComputedStyle(wordEl);
+      const probe = document.createElement('span');
+      probe.style.cssText =
+        'position:absolute;visibility:hidden;white-space:nowrap;' +
+        `font:${cs.fontStyle} ${cs.fontWeight} ${cs.fontSize}/${cs.lineHeight} ${cs.fontFamily};` +
+        `letter-spacing:${cs.letterSpacing};`;
+      document.body.appendChild(probe);
+      let max = 0;
+      for (const w of words) {
+        probe.textContent = w;
+        max = Math.max(max, probe.getBoundingClientRect().width);
+      }
+      probe.remove();
+      cycle.style.minWidth = Math.ceil(max) + 'px';
+    };
+    reserve();
+    let rt;
+    window.addEventListener('resize', () => {
+      clearTimeout(rt);
+      rt = setTimeout(reserve, 150);
+    });
+
+    // Swap text on the same styled element (keeps its scoped blue + yellow).
     if (reduce) return;
+    let i = 0;
     setInterval(() => {
       i = (i + 1) % words.length;
-      const span = document.createElement('span');
-      span.className = 'cycle-word';
-      span.textContent = words[i];
-      span.style.animation = 'word-in 0.55s cubic-bezier(.2,.7,.2,1) both';
-      holder.replaceChildren(span);
+      wordEl.textContent = words[i];
+      wordEl.style.animation = 'none';
+      void wordEl.offsetWidth; // restart the entrance animation
+      wordEl.style.animation = 'word-in 0.55s cubic-bezier(.2, .7, .2, 1) both';
     }, 2600);
   })();
 
@@ -372,10 +400,11 @@ const mottoHalf = Array.from({ length: 4 }, () => mottoPhrases).flat();
     letter-spacing: -0.015em;
     max-width: 640px;
   }
+  /* min-width is set by JS to the widest word so the line never reflows */
   .cycle {
     display: inline-block;
-    position: relative;
     white-space: nowrap;
+    text-align: left;
   }
   .cycle-word {
     display: inline-block;
@@ -758,10 +787,5 @@ const mottoHalf = Array.from({ length: 4 }, () => mottoPhrases).flat();
       grid-template-columns: 72px 1fr;
     }
     .card-row--to { grid-template-columns: 72px 1fr auto; }
-  }
-
-  @keyframes word-in {
-    0% { opacity: 0; transform: translateY(10px) rotate(-3deg); }
-    100% { opacity: 1; transform: translateY(0) rotate(0deg); }
   }
 </style>

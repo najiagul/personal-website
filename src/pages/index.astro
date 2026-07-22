@@ -1,267 +1,767 @@
 ---
 import Base from '../layouts/Base.astro';
 
-const work = [
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const email = 'najiagul.2000@gmail.com';
+
+const experience = [
   {
-    when: '2024 — now',
-    role: 'Product Manager, SAP',
-    note: 'adoption & portfolio analytics, eval frameworks, and enabling PMs to make AI part of their everyday product work',
+    when: 'now',
+    whenAccent: true,
+    role: 'Product Manager',
+    note: 'Helping product teams do their best work, on the Product Excellence team.',
+    company: 'SAP',
   },
   {
-    when: '2022 — 24',
-    role: 'Data Scientist & AI Consultant, IBM',
-    note: 'end-to-end machine learning for enterprise clients — finding insights in their data and shipping models to production',
+    when: 'before',
+    whenAccent: false,
+    role: 'Data Science Consultant',
+    note: 'Building AI solutions end to end, from first idea to launch.',
+    company: 'IBM',
   },
   {
-    when: '2024 — now',
-    role: 'MS Data Science & AI, Saarland University',
-    note: 'NLP, trustworthy ML, generative AI',
+    when: 'a while',
+    whenAccent: false,
+    role: 'Technical Writer',
+    note: "Turning complex concepts into clear, compelling stories for each brand's voice.",
+    company: 'Microsoft · Meta · Red Hat · CircleCI',
   },
 ];
 
-const help = [
+const approach = [
   {
-    what: 'Immersion',
-    how: 'the first weeks go deep into your product, users, and metrics — so everything after rests on your context',
+    n: '01',
+    title: 'Immersion',
+    body: 'The first weeks go deep into your product, users, and metrics — so everything after rests on real context.',
   },
   {
-    what: 'Find where users stall',
-    how: 'interviews and your own usage data, turned into a ranked list of fixes your team can start on Monday',
+    n: '02',
+    title: 'Find where users stall',
+    body: 'Interviews and your own usage data, turned into a ranked list of fixes your team can start on immediately.',
   },
   {
-    what: 'Specs that ship',
-    how: 'small, tightly scoped releases, written so engineering can start building without a clarification round',
+    n: '03',
+    title: 'Product specifications',
+    body: 'Small, tightly scoped releases, written so engineering can start building without a clarification round.',
   },
   {
-    what: 'Evals from day one',
-    how: 'a runnable definition of "good" for every AI feature, so "did the model update help?" takes minutes to answer — and the suite keeps working for your team long after the engagement ends',
+    n: '04',
+    title: 'Evals from day one',
+    body: 'A runnable definition of "good" for every AI feature, with a suite that keeps working long after the engagement ends.',
   },
   {
-    what: 'Hands-on when it helps',
-    how: "I don't stay in the doc — when the team is stretched, I build alongside your engineers: prototypes, eval pipelines, the plumbing around the model",
+    n: '05',
+    title: 'Hands-on when it helps',
+    body: "I don't stay in the doc! When the team is stretched, I build alongside your engineers: prototypes, eval pipelines, the plumbing around the model.",
   },
 ];
+
+// Motto marquee: one half repeated twice for a seamless -50% loop.
+const mottoPhrases = ['bridge the gap', 'translate the complex', 'build with intention'];
+const mottoHalf = Array.from({ length: 4 }, () => mottoPhrases).flat();
 ---
 
 <Base
   title="Najia Gul — fractional product manager for AI teams"
-  description="Product manager, former data scientist. I work with early-stage AI teams as a fractional PM — and build the evals that show whether each release helped."
+  description="I help teams turn complicated technology into products people can understand, trust, and love — a fractional PM, former data scientist, currently at SAP."
 >
-  <div class="sheet">
-    <header class="fade" style="--stagger: 0">
-      <span class="ident">
-        <span class="name">Najia Gul</span>
-        <span class="where">✦ Based in Germany</span>
-      </span>
-      <nav>
-        <a href="mailto:najiagul.2000@gmail.com">email</a>
-        <a href="https://www.linkedin.com/in/najia-gul">linkedin</a>
-        <a href="https://github.com/najiagul">github</a>
-      </nav>
-    </header>
+  <!-- ============ top bar ============ -->
+  <header class="topbar">
+    <a href="#top" class="logo">najia gul</a>
+    <nav class="nav">
+      <a href="#about">about</a>
+      <a href="#adventures">adventures</a>
+      <a href="#say-hi">say hi</a>
+    </nav>
+  </header>
 
-    <section class="intro fade" style="--stagger: 1">
-      <div class="intro-text">
-        <h1>I work where product meets&nbsp;AI.</h1>
-        <p>
-          I'm a fractional product manager for early-stage AI teams — and a former data
-          scientist. Most AI products lose users in the gap between what people are trying to
-          do and what the product actually helps them do. My work is finding that gap, closing
-          it, and building the evals that show whether each release actually helped.
+  <!-- ============ hero ============ -->
+  <section id="top" class="hero">
+    <div class="hero-copy">
+      <h1 class="fade-up" style="--delay: 0.1s">
+        Hi, I'm Najia — I help teams turn complicated technology into products people can
+        <span class="cycle" data-cycle><span class="cycle-word">understand</span></span>.
+      </h1>
+      <p class="hero-sub fade-up" style="--delay: 0.22s">
+        Most of my work is translation. I close the gap between the people who build the
+        technology and the people who use it.
+      </p>
+    </div>
+
+    <figure class="portrait fade-up" style="--delay: 0.34s">
+      <div class="portrait-block" aria-hidden="true"></div>
+      <div class="portrait-frame">
+        <img
+          src={`${base}/najia-portrait.jpg`}
+          alt="Najia Gul"
+          width="900"
+          height="1125"
+        />
+      </div>
+    </figure>
+  </section>
+
+  <!-- ============ scrolling motto ============ -->
+  <div class="motto" aria-hidden="true">
+    <div class="motto-track">
+      {
+        [0, 1].map(() => (
+          <div class="motto-half">
+            {mottoHalf.map((phrase, i) => (
+              <span class="motto-item" data-tone={i % 3}>
+                {phrase}
+                <span class="motto-star">✳</span>
+              </span>
+            ))}
+          </div>
+        ))
+      }
+    </div>
+  </div>
+
+  <!-- ============ about ============ -->
+  <section id="about" class="colset">
+    <div class="eyebrow reveal">a little<br />about me</div>
+    <div class="colset-body reveal">
+      <p class="lead">
+        I'm currently based in Germany and work as a product manager at
+        <em>SAP.</em>&nbsp;I help product teams achieve excellence and build stronger
+        ecosystems by bridging the gap between technical capabilities and product impact.
+      </p>
+      <p class="body">
+        Before SAP, I was a data science consultant at IBM, building AI solutions end to end.
+        I'm also a hobbyist writer — I've written whitepapers and developer guides for
+        Microsoft, Meta, Red Hat, CircleCI, and more, translating complex AI concepts into
+        clear, compelling content shaped to each brand's own voice.
+      </p>
+      <p class="body">My motto is to build things in this world with intention.</p>
+    </div>
+  </section>
+
+  <!-- ============ experience ============ -->
+  <section id="adventures" class="experience">
+    <h2 class="section-head">Experience</h2>
+    <div class="rows">
+      {
+        experience.map((job) => (
+          <div class="exp-row reveal">
+            <div class:list={['exp-when', { accent: job.whenAccent }]}>{job.when}</div>
+            <div class="exp-main">
+              <div class="exp-role">{job.role}</div>
+              <div class="exp-note">{job.note}</div>
+            </div>
+            <div class="exp-company">
+              <span class="highlight">{job.company}</span>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- ============ these days ============ -->
+  <section id="now" class="colset">
+    <div class="eyebrow reveal">these<br />days</div>
+    <div class="colset-body reveal">
+      <p class="lead">
+        I'm most interested in <em>trustworthy, safe AI</em> — particularly how it's reshaping
+        society, and what that means for all of us.
+      </p>
+      <p class="body">
+        I'm also fascinated by startups, entrepreneurship, and the creator economy. My
+        curiosity gravitates toward any meaningful intersection of technology with other
+        disciplines, and I get easily excited by ideas that challenge conventional thinking.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ say hi / contact ============ -->
+  <section id="say-hi" class="sayhi">
+    <div class="sayhi-inner">
+      <!-- lead-in -->
+      <div class="sayhi-lead">
+        <div class="eyebrow">let's work together</div>
+        <h2 class="sayhi-head">
+          Currently open to <em>fractional PM</em> engagements.
+        </h2>
+        <p class="hero-sub">
+          If you're shipping something ambitious — especially with AI in the mix — and want a
+          product partner who can go deep fast and leave your team better than they found it,
+          let's talk. Here's how I like to work.
         </p>
       </div>
-      <figure class="polaroid">
-        <img
-          class="photo"
-          src="najia.jpg"
-          alt="Najia Gul, sitting on a park bench under green trees"
-          width="450"
-          height="600"
-        />
-      </figure>
-    </section>
 
-    <section class="fade" style="--stagger: 2">
-      <span class="label">Work</span>
-      <ul class="ledger">
-        {
-          work.map((w) => (
-            <li>
-              <span class="when">{w.when}</span>
-              <span class="entry">
-                <span class="role">{w.role}</span>
-                <span class="note">{w.note}</span>
-              </span>
-            </li>
-          ))
-        }
-      </ul>
-    </section>
+      <!-- approach -->
+      <div class="colset approach">
+        <div class="eyebrow">how I<br />work</div>
+        <div class="approach-body">
+          {
+            approach.map((item) => (
+              <div class="approach-row reveal">
+                <div class="approach-n">{item.n}</div>
+                <div>
+                  <div class="approach-title">{item.title}</div>
+                  <div class="approach-desc">{item.body}</div>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
 
-    <section class="fade" style="--stagger: 3">
-      <span class="label">Working together</span>
-      <ul class="ledger">
-        {
-          help.map((h) => (
-            <li>
-              <span class="when what">{h.what}</span>
-              <span class="entry">
-                <span class="note">{h.how}</span>
-              </span>
-            </li>
-          ))
-        }
-      </ul>
-    </section>
+      <!-- contact form -->
+      <div class="colset">
+        <div class="eyebrow">say<br />hi</div>
+        <form class="card" data-contact>
+          <div class="card-row card-row--to">
+            <label>To</label>
+            <span class="card-to">{email}</span>
+            <button type="button" class="copy-btn" data-copy={email}>Copy</button>
+          </div>
+          <div class="card-row">
+            <label for="from">From</label>
+            <input id="from" name="from" type="email" autocomplete="email" />
+          </div>
+          <div class="card-row">
+            <label for="subject">Subject</label>
+            <input id="subject" name="subject" type="text" />
+          </div>
+          <div class="card-row card-row--message">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="4"></textarea>
+          </div>
+          <button type="submit" class="send-btn">Send ↗</button>
+        </form>
+      </div>
+    </div>
+  </section>
 
-    <section class="outro fade" style="--stagger: 4">
-      <span class="label">Contact</span>
-      <p>
-        Currently open to fractional engagements — write to me at
-        <a href="mailto:najiagul.2000@gmail.com">najiagul.2000@gmail.com</a>.
-      </p>
-    </section>
-
-    <footer class="fade" style="--stagger: 5">
-      <span>© {new Date().getFullYear()} Najia Gul</span>
-    </footer>
-  </div>
+  <!-- ============ footer ============ -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-line">
+        building things with <em>intention</em>, and curiosity.
+      </div>
+      <div class="footer-meta">© {new Date().getFullYear()} Najia Gul</div>
+    </div>
+  </footer>
 </Base>
 
+<script is:inline define:vars={{ email }}>
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- hero cycling word ---------- */
+  (() => {
+    const holder = document.querySelector('[data-cycle]');
+    if (!holder) return;
+    const words = ['understand', 'trust', 'use', 'love', 'believe in'];
+    let i = 0;
+    if (reduce) return;
+    setInterval(() => {
+      i = (i + 1) % words.length;
+      const span = document.createElement('span');
+      span.className = 'cycle-word';
+      span.textContent = words[i];
+      span.style.animation = 'word-in 0.55s cubic-bezier(.2,.7,.2,1) both';
+      holder.replaceChildren(span);
+    }, 2600);
+  })();
+
+  /* ---------- scroll reveal ---------- */
+  (() => {
+    if (reduce || !('IntersectionObserver' in window)) {
+      document.querySelectorAll('.reveal').forEach((el) => el.classList.add('in-view'));
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+            io.unobserve(entry.target);
+          }
+        }
+      },
+      { rootMargin: '0px 0px -12% 0px', threshold: 0.15 }
+    );
+    document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+  })();
+
+  /* ---------- copy email ---------- */
+  (() => {
+    const btn = document.querySelector('[data-copy]');
+    if (!btn) return;
+    let t;
+    btn.addEventListener('click', () => {
+      const value = btn.getAttribute('data-copy');
+      if (navigator.clipboard) navigator.clipboard.writeText(value).catch(() => {});
+      btn.textContent = 'Copied';
+      clearTimeout(t);
+      t = setTimeout(() => (btn.textContent = 'Copy'), 1600);
+    });
+  })();
+
+  /* ---------- contact form -> mailto ---------- */
+  (() => {
+    const form = document.querySelector('[data-contact]');
+    if (!form) return;
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const from = form.querySelector('#from').value.trim();
+      const subject = form.querySelector('#subject').value.trim();
+      const message = form.querySelector('#message').value;
+      const body = encodeURIComponent(message + (from ? '\n\n— ' + from : ''));
+      const subj = encodeURIComponent(subject || "Fractional PM — let's talk");
+      window.location.href = `mailto:${email}?subject=${subj}&body=${body}`;
+    });
+  })();
+</script>
+
 <style>
-  .sheet {
-    max-width: 680px;
+  /* shared container */
+  .topbar,
+  .hero,
+  .colset,
+  .experience,
+  .sayhi,
+  .footer-inner {
+    max-width: 1080px;
     margin: 0 auto;
-    padding: 0 26px;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+    padding-left: 40px;
+    padding-right: 40px;
   }
 
-  header {
+  /* ---------- top bar ---------- */
+  .topbar {
     display: flex;
     justify-content: space-between;
-    align-items: baseline;
-    padding: 34px 0;
+    align-items: center;
+    padding-top: 30px;
+    padding-bottom: 30px;
   }
-  .ident { display: flex; flex-direction: column; gap: 2px; }
-  .name {
-    font-family: var(--font-sans);
-    font-weight: 700;
-    font-size: 1.1rem;
-    letter-spacing: -0.005em;
+  .logo {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    color: var(--ink);
   }
-  .where {
-    font-size: 0.78rem;
-    color: var(--soft);
+  .nav {
+    display: flex;
+    gap: 26px;
+    font-family: var(--font-mono);
+    font-size: 12.5px;
     letter-spacing: 0.02em;
   }
-  nav { display: flex; gap: 22px; }
-  nav a {
-    font-size: 0.88rem;
-    text-decoration: none;
-    color: var(--soft);
-  }
-  nav a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 4px; }
+  .nav a { color: var(--nav); }
+  .nav a:hover { color: var(--ink); }
 
-  .intro {
-    padding: 12vh 0 0;
-    display: flex;
-    align-items: flex-start;
-    gap: 44px;
-  }
-  .intro-text { flex: 1; }
-  /* polaroid: white card, thicker bottom lip, soft shadow, gentle tilt */
-  .polaroid {
-    flex-shrink: 0;
-    width: 196px;
-    margin-top: 8px;
-    padding: 11px 11px 34px;
-    background: #fff;
-    border: 1px solid var(--hairline);
-    box-shadow:
-      0 12px 28px rgba(26, 24, 21, 0.15),
-      0 2px 6px rgba(26, 24, 21, 0.08);
-    transform: rotate(-2.4deg);
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
-  }
-  .polaroid:hover {
-    transform: rotate(0deg) scale(1.015);
-    box-shadow:
-      0 18px 40px rgba(26, 24, 21, 0.18),
-      0 3px 8px rgba(26, 24, 21, 0.1);
-  }
-  .intro :global(.photo) {
-    width: 100%;
-    height: auto;
+  /* ---------- hero ---------- */
+  .hero {
+    padding-top: 60px;
+    padding-bottom: 84px;
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 56px;
+    align-items: center;
   }
   h1 {
-    font-family: var(--font-sans);
-    font-weight: 700;
-    font-size: clamp(1.9rem, 4.6vw, 2.7rem);
-    line-height: 1.14;
-    letter-spacing: -0.028em;
-    text-wrap: balance;
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: 52px;
+    line-height: 1.12;
+    letter-spacing: -0.015em;
+    max-width: 640px;
   }
-  .intro p {
-    margin-top: 26px;
-    font-size: 1.02rem;
-    color: var(--ink);
-    max-width: 60ch;
+  .cycle {
+    display: inline-block;
+    position: relative;
+    white-space: nowrap;
+  }
+  .cycle-word {
+    display: inline-block;
+    color: var(--accent);
+    background: linear-gradient(rgba(255, 207, 71, 0.38), rgba(255, 207, 71, 0.38))
+      left bottom / 100% 8px no-repeat;
+  }
+  .hero-sub {
+    font-weight: 300;
+    font-size: 19px;
+    line-height: 1.6;
+    color: var(--body);
+    max-width: 560px;
+    margin-top: 34px;
   }
 
-  section + section { margin-top: 76px; }
-  .intro + section { margin-top: 88px; }
-
-  .ledger {
-    list-style: none;
-    margin-top: 18px;
+  .portrait { position: relative; }
+  .portrait-block {
+    position: absolute;
+    inset: 0;
+    transform: translate(14px, 14px);
+    border-radius: 16px;
+    background: rgba(255, 207, 71, 0.55);
   }
-  .ledger li {
-    display: grid;
-    grid-template-columns: 168px 1fr;
-    gap: 20px;
-    padding: 16px 0;
+  .portrait-frame {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    aspect-ratio: 4 / 5;
+    box-shadow: 0 18px 44px rgba(22, 35, 63, 0.14);
+  }
+  .portrait-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+  }
+
+  /* ---------- motto marquee ---------- */
+  .motto {
     border-top: 1px solid var(--hairline);
+    border-bottom: 1px solid var(--hairline);
+    padding: 20px 0;
+    overflow: hidden;
+    white-space: nowrap;
   }
-  .ledger li:last-child { border-bottom: 1px solid var(--hairline); }
-  .when {
-    font-size: 0.88rem;
-    color: var(--soft);
-    padding-top: 2px;
-    font-variant-numeric: tabular-nums;
+  .motto-track {
+    display: inline-flex;
+    animation: marquee 80s linear infinite;
   }
-  .when.what {
+  .motto-half {
+    display: inline-flex;
+    gap: 40px;
+    flex-shrink: 0;
+    padding-right: 40px;
+  }
+  .motto-item {
+    font-family: var(--font-serif);
+    font-size: 26px;
+    display: inline-flex;
+    gap: 40px;
+    align-items: center;
+  }
+  .motto-item[data-tone='0'] { color: var(--yellow); }
+  .motto-item[data-tone='1'] { color: var(--accent); }
+  .motto-item[data-tone='2'] { color: var(--ink); }
+  .motto-star { color: #b9c0d4; }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .motto-track { animation: none; }
+  }
+
+  /* ---------- two-column sections ---------- */
+  .colset {
+    padding-top: 100px;
+    padding-bottom: 40px;
+    display: grid;
+    grid-template-columns: 210px 1fr;
+    gap: 40px;
+  }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    padding-top: 12px;
+  }
+  .colset-body { max-width: 660px; }
+  .lead {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: 26px;
+    line-height: 1.45;
+    margin-bottom: 26px;
     color: var(--ink);
-    font-weight: 600;
-    font-size: 0.92rem;
   }
-  .entry { display: flex; flex-direction: column; gap: 4px; }
-  .role { font-weight: 600; font-size: 0.98rem; }
-  .note { font-size: 0.92rem; color: var(--soft); max-width: 52ch; }
+  .lead em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .body {
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--body);
+  }
+  .body + .body { margin-top: 18px; }
 
-  .outro p {
-    margin-top: 18px;
-    font-size: 1.02rem;
-    max-width: 60ch;
+  /* ---------- experience ---------- */
+  .experience {
+    padding-top: 90px;
+    padding-bottom: 40px;
+  }
+  .section-head {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: 40px;
+    color: var(--ink);
+    margin-bottom: 12px;
+  }
+  .exp-row {
+    display: grid;
+    grid-template-columns: 120px 1fr auto;
+    gap: 28px;
+    align-items: baseline;
+    padding: 26px 0;
+    border-top: 1px solid var(--hairline-strong);
+  }
+  .exp-row:last-child { border-bottom: 1px solid var(--hairline-strong); }
+  .exp-when {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    letter-spacing: 0.08em;
+    color: var(--muted-3);
+    white-space: nowrap;
+  }
+  .exp-when.accent { color: var(--accent); }
+  .exp-role {
+    font-weight: 500;
+    font-size: 22px;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .exp-note {
+    font-style: italic;
+    font-size: 16px;
+    color: var(--muted-2);
+  }
+  .exp-company {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+    text-align: right;
+    align-self: center;
+  }
+  .highlight {
+    background: linear-gradient(rgba(255, 207, 71, 0.5), rgba(255, 207, 71, 0.5))
+      left 82% / 100% 42% no-repeat;
+    padding: 0 2px;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
   }
 
-  footer {
-    margin-top: auto;
-    padding: 90px 0 36px;
+  /* ---------- say hi ---------- */
+  .sayhi {
+    margin-top: 60px;
+    padding-top: 90px;
+    padding-bottom: 70px;
+  }
+  .sayhi-inner {
+    border-top: 1px solid var(--hairline);
+    padding-top: 70px;
+  }
+  .sayhi-lead {
+    max-width: 780px;
+    margin-bottom: 90px;
+  }
+  .sayhi-lead .eyebrow {
+    padding-top: 0;
+    margin-bottom: 24px;
+  }
+  .sayhi-head {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: 40px;
+    line-height: 1.08;
+    margin-bottom: 22px;
+  }
+  .sayhi-head em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .sayhi-lead .hero-sub { margin-top: 0; max-width: 640px; }
+
+  .approach { padding: 0; margin-bottom: 100px; }
+  .approach-body { max-width: 720px; }
+  .approach-row {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: 24px;
+    align-items: baseline;
+    padding: 26px 0;
+    border-top: 1px solid var(--hairline-strong);
+  }
+  .approach-row:last-child { border-bottom: 1px solid var(--hairline-strong); }
+  .approach-n {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--accent);
+  }
+  .approach-title {
+    font-family: var(--font-serif);
+    font-size: 23px;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .approach-desc {
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--body);
+  }
+
+  /* ---------- contact card ---------- */
+  .sayhi .colset { padding: 0; }
+  .card {
+    max-width: 720px;
+    background: var(--card);
+    border-radius: 22px;
+    padding: 14px 40px 40px;
+  }
+  .card-row {
+    display: grid;
+    grid-template-columns: 96px 1fr;
+    align-items: center;
+    gap: 16px;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--hairline-soft);
+  }
+  .card-row--to { grid-template-columns: 96px 1fr auto; }
+  .card-row--message {
+    grid-template-columns: 96px 1fr;
+    align-items: start;
+    padding-bottom: 28px;
+  }
+  .card label {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    letter-spacing: 0.06em;
+    color: var(--muted-3);
+  }
+  .card-row--message label { padding-top: 2px; }
+  .card-to {
+    font-size: 17px;
+    color: var(--ink);
+  }
+  .card input,
+  .card textarea {
+    font-family: var(--font-sans);
+    font-size: 17px;
+    color: var(--ink);
+    background: none;
+    border: none;
+    outline: none;
+    width: 100%;
+  }
+  .card textarea {
+    line-height: 1.6;
+    resize: vertical;
+  }
+  .copy-btn {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    letter-spacing: 0.04em;
+    color: var(--accent);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px 2px;
+    transition: color 0.2s ease;
+  }
+  .copy-btn:hover { color: var(--ink); }
+  .send-btn {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    padding: 15px 34px;
+    border-radius: 40px;
+    background: var(--ink);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    margin-top: 28px;
+    transition: background 0.2s ease;
+  }
+  .send-btn:hover { background: var(--accent); }
+
+  /* ---------- footer ---------- */
+  .footer {
+    background: var(--footer-bg);
+    color: #fff;
+    margin-top: 40px;
+  }
+  .footer-inner {
+    padding-top: 80px;
+    padding-bottom: 80px;
     display: flex;
     justify-content: space-between;
-    font-size: 0.82rem;
-    color: var(--soft);
+    align-items: flex-end;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  .footer-line {
+    font-family: var(--font-serif);
+    font-size: 40px;
+    line-height: 1.1;
+    max-width: 460px;
+  }
+  .footer-line em {
+    font-style: italic;
+    color: var(--yellow);
+  }
+  .footer-meta {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--footer-meta);
+    text-align: right;
+  }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 820px) {
+    h1 { font-size: 40px; }
+    .hero {
+      grid-template-columns: 1fr;
+      gap: 40px;
+      padding-top: 40px;
+      padding-bottom: 60px;
+    }
+    .portrait { max-width: 280px; }
+    .colset,
+    .sayhi .colset {
+      grid-template-columns: 1fr;
+      gap: 16px;
+      padding-top: 70px;
+    }
+    .eyebrow { padding-top: 0; }
+    .eyebrow br { display: none; }
   }
 
   @media (max-width: 560px) {
-    .intro { padding-top: 7vh; flex-direction: column-reverse; gap: 28px; }
-    .polaroid { width: 168px; margin-top: 0; }
-    section + section { margin-top: 56px; }
-    .intro + section { margin-top: 64px; }
-    .ledger li { grid-template-columns: 1fr; gap: 6px; }
-    .when { padding-top: 0; }
-    footer { padding-top: 64px; }
+    .topbar,
+    .hero,
+    .colset,
+    .experience,
+    .sayhi,
+    .footer-inner {
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+    h1 { font-size: 34px; }
+    .lead,
+    .sayhi-head,
+    .section-head,
+    .footer-line { font-size: 28px; }
+    .exp-row {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+    .exp-company { text-align: left; }
+    .card { padding: 14px 24px 32px; }
+    .card-row,
+    .card-row--to,
+    .card-row--message {
+      grid-template-columns: 72px 1fr;
+    }
+    .card-row--to { grid-template-columns: 72px 1fr auto; }
+  }
+
+  @keyframes word-in {
+    0% { opacity: 0; transform: translateY(10px) rotate(-3deg); }
+    100% { opacity: 1; transform: translateY(0) rotate(0deg); }
   }
 </style>

@@ -1,18 +1,37 @@
 /* ---------- tokens ---------- */
 :root {
-  --bg: #FFFFFF;
-  --ink: #0A0A0A;
-  --soft: #6E6E6E;
-  --hairline: #EAEAEA;
-  /* Neue Haas Grotesk is licensed; closest free match is a self-hosted
-     Helvetica clone (Arimo), consistent across devices */
-  --font-sans: 'Arimo Variable', 'Helvetica Neue', Arial, sans-serif;
-  --font-serif: var(--font-sans);
+  --bg: #ffffff;
+
+  /* ink / text */
+  --ink: #1a2340;
+  --body: #6b7690;
+  --muted-2: #7c88a1;
+  --muted-3: #8791a8;
+  --nav: #586686;
+
+  /* accents */
+  --accent: #274bd6;
+  --yellow: #ffcf47;
+
+  /* surfaces */
+  --card: #f6f5f1;
+  --footer-bg: #1a2340;
+  --footer-meta: #b6a88e;
+
+  /* hairlines */
+  --hairline: rgba(22, 35, 63, 0.14);
+  --hairline-strong: rgba(22, 35, 63, 0.16);
+  --hairline-soft: rgba(22, 35, 63, 0.12);
+
+  /* type */
+  --font-serif: 'Crimson Pro Variable', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Plus Jakarta Sans Variable', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, 'SFMono-Regular', monospace;
 }
 
 /* ---------- reset ---------- */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { height: 100%; }
+html { height: 100%; scroll-behavior: smooth; }
 body {
   min-height: 100%;
   background: var(--bg);
@@ -21,37 +40,42 @@ body {
   font-size: 1rem;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 img, svg { max-width: 100%; display: block; }
 
-::selection { background: var(--ink); color: var(--bg); }
+::selection { background: rgba(255, 207, 71, 0.28); }
 
 a {
-  color: var(--ink);
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 3px;
-  text-decoration-color: rgba(26, 24, 21, 0.3);
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.2s ease;
 }
-a:hover { text-decoration-color: var(--ink); }
-a:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+a:hover { color: var(--ink); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
-/* small letterspaced section label */
-.label {
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--soft);
-}
-
-/* single entrance fade, gated on JS + motion preference */
+/* ---------- scroll reveal ---------- */
+/* Elements start hidden only when JS + motion are both available, so the
+   page is fully legible without either. IntersectionObserver adds .in-view. */
 @media (prefers-reduced-motion: no-preference) {
-  html.js .fade {
+  html.js .reveal {
     opacity: 0;
-    transform: translateY(6px);
-    animation: fade-in 0.7s ease forwards;
-    animation-delay: calc(var(--stagger, 0) * 0.1s);
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
   }
-  @keyframes fade-in { to { opacity: 1; transform: none; } }
+  html.js .reveal.in-view {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------- hero entrance ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  html.js .fade-up {
+    opacity: 0;
+    transform: translateY(16px);
+    animation: fade-up 0.8s ease forwards;
+    animation-delay: var(--delay, 0s);
+  }
+  @keyframes fade-up { to { opacity: 1; transform: none; } }
 }

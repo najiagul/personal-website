@@ -39,7 +39,8 @@ body {
   font-family: var(--font-sans);
   font-size: 1rem;
   line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
+  /* Use the browser's default (subpixel) smoothing to match the design's
+     text weight; forcing `antialiased` renders strokes lighter on macOS. */
   overflow-x: hidden;
 }
 img, svg { max-width: 100%; display: block; }

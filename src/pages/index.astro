@@ -153,7 +153,7 @@ const mottoHalf = Array.from({ length: 4 }, () => mottoPhrases).flat();
               <div class="exp-note">{job.note}</div>
             </div>
             <div class="exp-company">
-              <span class="highlight">{job.company}</span>
+              <span class="company-mark">{job.company}</span>
             </div>
           </div>
         ))
@@ -613,12 +613,9 @@ const mottoHalf = Array.from({ length: 4 }, () => mottoPhrases).flat();
     text-align: right;
     align-self: center;
   }
-  .highlight {
-    background: linear-gradient(rgba(255, 207, 71, 0.5), rgba(255, 207, 71, 0.5))
-      left 82% / 100% 42% no-repeat;
-    padding: 0 2px;
-    box-decoration-break: clone;
-    -webkit-box-decoration-break: clone;
+  .company-mark {
+    color: var(--accent);
+    font-weight: 500;
   }
 
   /* ---------- say hi ---------- */

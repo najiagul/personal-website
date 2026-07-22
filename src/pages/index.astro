@@ -3,6 +3,9 @@ import Base from '../layouts/Base.astro';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const email = 'najiagul.2000@gmail.com';
+// Web3Forms public access key — safe to ship in client HTML. It only permits
+// delivering form submissions to the registered inbox; rotate at web3forms.com.
+const web3formsKey = '36990791-ebf0-45ae-8df6-ce639f350422';
 
 const experience = [
   {
@@ -212,7 +215,18 @@ const mottoHalf = Array.from({ length: 4 }, () => mottoPhrases).flat();
       <!-- contact form -->
       <div class="colset">
         <div class="eyebrow">say<br />hi</div>
-        <form class="card" data-contact>
+        <form
+          class="card"
+          data-contact
+          action="https://api.web3forms.com/submit"
+          method="POST"
+        >
+          <input type="hidden" name="access_key" value={web3formsKey} />
+          <input type="hidden" name="subject" value="Fractional PM — let's talk" data-subject-field />
+          <input type="hidden" name="from_name" value="najiagul.com contact form" />
+          <!-- honeypot: bots fill this, humans never see it -->
+          <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" />
+
           <div class="card-row card-row--to">
             <label>To</label>
             <span class="card-to">{email}</span>
@@ -220,17 +234,20 @@ const mottoHalf = Array.from({ length: 4 }, () => mottoPhrases).flat();
           </div>
           <div class="card-row">
             <label for="from">From</label>
-            <input id="from" name="from" type="email" autocomplete="email" />
+            <input id="from" name="email" type="email" autocomplete="email" required />
           </div>
           <div class="card-row">
             <label for="subject">Subject</label>
-            <input id="subject" name="subject" type="text" />
+            <input id="subject" type="text" />
           </div>
           <div class="card-row card-row--message">
             <label for="message">Message</label>
-            <textarea id="message" name="message" rows="4"></textarea>
+            <textarea id="message" name="message" rows="4" required></textarea>
           </div>
-          <button type="submit" class="send-btn">Send ↗</button>
+          <div class="card-send">
+            <button type="submit" class="send-btn">Send ↗</button>
+            <p class="form-status" data-status role="status" aria-live="polite"></p>
+          </div>
         </form>
       </div>
     </div>
@@ -247,7 +264,7 @@ const mottoHalf = Array.from({ length: 4 }, () => mottoPhrases).flat();
   </footer>
 </Base>
 
-<script is:inline define:vars={{ email }}>
+<script is:inline>
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* ---------- hero cycling word ---------- */
@@ -329,18 +346,50 @@ const mottoHalf = Array.from({ length: 4 }, () => mottoPhrases).flat();
     });
   })();
 
-  /* ---------- contact form -> mailto ---------- */
+  /* ---------- contact form -> Web3Forms ---------- */
   (() => {
     const form = document.querySelector('[data-contact]');
     if (!form) return;
-    form.addEventListener('submit', (e) => {
+    const status = form.querySelector('[data-status]');
+    const button = form.querySelector('.send-btn');
+    const subjectField = form.querySelector('[data-subject-field]');
+    const subjectInput = form.querySelector('#subject');
+    const defaultSubject = "Fractional PM — let's talk";
+
+    const setStatus = (msg, kind) => {
+      status.textContent = msg;
+      status.dataset.kind = kind || '';
+    };
+
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const from = form.querySelector('#from').value.trim();
-      const subject = form.querySelector('#subject').value.trim();
-      const message = form.querySelector('#message').value;
-      const body = encodeURIComponent(message + (from ? '\n\n— ' + from : ''));
-      const subj = encodeURIComponent(subject || "Fractional PM — let's talk");
-      window.location.href = `mailto:${email}?subject=${subj}&body=${body}`;
+      // Carry the visible subject into the submitted field, with a fallback.
+      subjectField.value = subjectInput.value.trim() || defaultSubject;
+
+      const label = button.textContent;
+      button.disabled = true;
+      button.textContent = 'Sending…';
+      setStatus('', '');
+
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          headers: { Accept: 'application/json' },
+          body: new FormData(form),
+        });
+        const data = await res.json().catch(() => ({}));
+        if (res.ok && data.success) {
+          form.reset();
+          setStatus("Thanks — your message is on its way. I'll be in touch.", 'ok');
+        } else {
+          setStatus(data.message || 'Something went wrong — please email me directly.', 'err');
+        }
+      } catch (_) {
+        setStatus('Network error — please email me directly.', 'err');
+      } finally {
+        button.disabled = false;
+        button.textContent = label;
+      }
     });
   })();
 </script>
@@ -702,10 +751,29 @@ const mottoHalf = Array.from({ length: 4 }, () => mottoPhrases).flat();
     color: #fff;
     border: none;
     cursor: pointer;
-    margin-top: 28px;
     transition: background 0.2s ease;
   }
   .send-btn:hover { background: var(--accent); }
+  .send-btn:disabled { opacity: 0.6; cursor: default; }
+
+  .card-send {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 18px;
+    margin-top: 28px;
+  }
+  .form-status {
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.5;
+    margin: 0;
+  }
+  .form-status[data-kind='ok'] { color: var(--accent); }
+  .form-status[data-kind='err'] { color: #b4341f; }
+
+  /* honeypot — hidden from humans; bots that tick it get rejected */
+  .hp { display: none; }
 
   /* ---------- footer ---------- */
   .footer {

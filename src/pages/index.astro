@@ -112,7 +112,9 @@ const mottoHalf = Array.from({ length: 4 }, () => mottoPhrases).flat();
             {mottoHalf.map((phrase, i) => (
               <span class="motto-item" data-tone={i % 3}>
                 {phrase}
-                <span class="motto-star">✳</span>
+                {/* U+FE0E forces text (non-emoji) rendering so iOS Safari
+                    doesn't turn the asterisk into a green emoji glyph */}
+                <span class="motto-star">{'✳︎'}</span>
               </span>
             ))}
           </div>
@@ -195,7 +197,7 @@ const mottoHalf = Array.from({ length: 4 }, () => mottoPhrases).flat();
 
       <!-- approach -->
       <div class="colset approach">
-        <div class="eyebrow">how I<br />work</div>
+        <div class="eyebrow">my approach<br />to work</div>
         <div class="approach-body">
           {
             approach.map((item) => (
@@ -720,6 +722,7 @@ const mottoHalf = Array.from({ length: 4 }, () => mottoPhrases).flat();
     border: none;
     outline: none;
     width: 100%;
+    min-width: 0; /* allow fields to shrink inside the grid on narrow screens */
   }
   .card textarea {
     line-height: 1.6;
@@ -821,7 +824,6 @@ const mottoHalf = Array.from({ length: 4 }, () => mottoPhrases).flat();
       padding-top: 70px;
     }
     .eyebrow { padding-top: 0; }
-    .eyebrow br { display: none; }
   }
 
   @media (max-width: 560px) {
@@ -846,10 +848,24 @@ const mottoHalf = Array.from({ length: 4 }, () => mottoPhrases).flat();
     .exp-company { text-align: left; }
     .card { padding: 14px 24px 32px; }
     .card-row,
-    .card-row--to,
     .card-row--message {
       grid-template-columns: 72px 1fr;
     }
-    .card-row--to { grid-template-columns: 72px 1fr auto; }
+    /* Stack the To row so the long email gets a full-width line and can't
+       push the card wider than the viewport. */
+    .card-row--to {
+      grid-template-columns: 1fr auto;
+      grid-template-areas:
+        'label label'
+        'value copy';
+      row-gap: 6px;
+    }
+    .card-row--to label { grid-area: label; }
+    .card-row--to .card-to {
+      grid-area: value;
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+    .card-row--to .copy-btn { grid-area: copy; }
   }
 </style>

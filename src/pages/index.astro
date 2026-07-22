@@ -3,6 +3,9 @@ import Base from '../layouts/Base.astro';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const email = 'najiagul.2000@gmail.com';
+// Web3Forms public access key — safe to ship in client HTML. It only permits
+// delivering form submissions to the registered inbox; rotate at web3forms.com.
+const web3formsKey = '36990791-ebf0-45ae-8df6-ce639f350422';
 
 const experience = [
   {
@@ -80,7 +83,7 @@ const mottoHalf = Array.from({ length: 4 }, () => mottoPhrases).flat();
     <div class="hero-copy">
       <h1 class="fade-up" style="--delay: 0.1s">
         Hi, I'm Najia — I help teams turn complicated technology into products people can
-        <span class="cycle" data-cycle><span class="cycle-word">understand</span></span>.
+        <span class="cycle" data-cycle><span class="cycle-word" data-cycle-word>understand</span>.</span>
       </h1>
       <p class="hero-sub fade-up" style="--delay: 0.22s">
         Most of my work is translation. I close the gap between the people who build the
@@ -212,7 +215,18 @@ const mottoHalf = Array.from({ length: 4 }, () => mottoPhrases).flat();
       <!-- contact form -->
       <div class="colset">
         <div class="eyebrow">say<br />hi</div>
-        <form class="card" data-contact>
+        <form
+          class="card"
+          data-contact
+          action="https://api.web3forms.com/submit"
+          method="POST"
+        >
+          <input type="hidden" name="access_key" value={web3formsKey} />
+          <input type="hidden" name="subject" value="Fractional PM — let's talk" data-subject-field />
+          <input type="hidden" name="from_name" value="najiagul.com contact form" />
+          <!-- honeypot: bots fill this, humans never see it -->
+          <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" />
+
           <div class="card-row card-row--to">
             <label>To</label>
             <span class="card-to">{email}</span>
@@ -220,17 +234,20 @@ const mottoHalf = Array.from({ length: 4 }, () => mottoPhrases).flat();
           </div>
           <div class="card-row">
             <label for="from">From</label>
-            <input id="from" name="from" type="email" autocomplete="email" />
+            <input id="from" name="email" type="email" autocomplete="email" required />
           </div>
           <div class="card-row">
             <label for="subject">Subject</label>
-            <input id="subject" name="subject" type="text" />
+            <input id="subject" type="text" />
           </div>
           <div class="card-row card-row--message">
             <label for="message">Message</label>
-            <textarea id="message" name="message" rows="4"></textarea>
+            <textarea id="message" name="message" rows="4" required></textarea>
           </div>
-          <button type="submit" class="send-btn">Send ↗</button>
+          <div class="card-send">
+            <button type="submit" class="send-btn">Send ↗</button>
+            <p class="form-status" data-status role="status" aria-live="polite"></p>
+          </div>
         </form>
       </div>
     </div>
@@ -247,23 +264,51 @@ const mottoHalf = Array.from({ length: 4 }, () => mottoPhrases).flat();
   </footer>
 </Base>
 
-<script is:inline define:vars={{ email }}>
+<script is:inline>
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* ---------- hero cycling word ---------- */
   (() => {
-    const holder = document.querySelector('[data-cycle]');
-    if (!holder) return;
+    const cycle = document.querySelector('[data-cycle]');
+    const wordEl = document.querySelector('[data-cycle-word]');
+    if (!cycle || !wordEl) return;
     const words = ['understand', 'trust', 'use', 'love', 'believe in'];
-    let i = 0;
+
+    // Reserve the width of the widest word so the sentence always wraps the
+    // same way — the cycling word stays on the last line instead of hopping
+    // up a line when a shorter word (e.g. "use") is shown.
+    const reserve = () => {
+      const cs = getComputedStyle(wordEl);
+      const probe = document.createElement('span');
+      probe.style.cssText =
+        'position:absolute;visibility:hidden;white-space:nowrap;' +
+        `font:${cs.fontStyle} ${cs.fontWeight} ${cs.fontSize}/${cs.lineHeight} ${cs.fontFamily};` +
+        `letter-spacing:${cs.letterSpacing};`;
+      document.body.appendChild(probe);
+      let max = 0;
+      for (const w of words) {
+        probe.textContent = w;
+        max = Math.max(max, probe.getBoundingClientRect().width);
+      }
+      probe.remove();
+      cycle.style.minWidth = Math.ceil(max) + 'px';
+    };
+    reserve();
+    let rt;
+    window.addEventListener('resize', () => {
+      clearTimeout(rt);
+      rt = setTimeout(reserve, 150);
+    });
+
+    // Swap text on the same styled element (keeps its scoped blue + yellow).
     if (reduce) return;
+    let i = 0;
     setInterval(() => {
       i = (i + 1) % words.length;
-      const span = document.createElement('span');
-      span.className = 'cycle-word';
-      span.textContent = words[i];
-      span.style.animation = 'word-in 0.55s cubic-bezier(.2,.7,.2,1) both';
-      holder.replaceChildren(span);
+      wordEl.textContent = words[i];
+      wordEl.style.animation = 'none';
+      void wordEl.offsetWidth; // restart the entrance animation
+      wordEl.style.animation = 'word-in 0.55s cubic-bezier(.2, .7, .2, 1) both';
     }, 2600);
   })();
 
@@ -301,18 +346,50 @@ const mottoHalf = Array.from({ length: 4 }, () => mottoPhrases).flat();
     });
   })();
 
-  /* ---------- contact form -> mailto ---------- */
+  /* ---------- contact form -> Web3Forms ---------- */
   (() => {
     const form = document.querySelector('[data-contact]');
     if (!form) return;
-    form.addEventListener('submit', (e) => {
+    const status = form.querySelector('[data-status]');
+    const button = form.querySelector('.send-btn');
+    const subjectField = form.querySelector('[data-subject-field]');
+    const subjectInput = form.querySelector('#subject');
+    const defaultSubject = "Fractional PM — let's talk";
+
+    const setStatus = (msg, kind) => {
+      status.textContent = msg;
+      status.dataset.kind = kind || '';
+    };
+
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const from = form.querySelector('#from').value.trim();
-      const subject = form.querySelector('#subject').value.trim();
-      const message = form.querySelector('#message').value;
-      const body = encodeURIComponent(message + (from ? '\n\n— ' + from : ''));
-      const subj = encodeURIComponent(subject || "Fractional PM — let's talk");
-      window.location.href = `mailto:${email}?subject=${subj}&body=${body}`;
+      // Carry the visible subject into the submitted field, with a fallback.
+      subjectField.value = subjectInput.value.trim() || defaultSubject;
+
+      const label = button.textContent;
+      button.disabled = true;
+      button.textContent = 'Sending…';
+      setStatus('', '');
+
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          headers: { Accept: 'application/json' },
+          body: new FormData(form),
+        });
+        const data = await res.json().catch(() => ({}));
+        if (res.ok && data.success) {
+          form.reset();
+          setStatus("Thanks — your message is on its way. I'll be in touch.", 'ok');
+        } else {
+          setStatus(data.message || 'Something went wrong — please email me directly.', 'err');
+        }
+      } catch (_) {
+        setStatus('Network error — please email me directly.', 'err');
+      } finally {
+        button.disabled = false;
+        button.textContent = label;
+      }
     });
   })();
 </script>
@@ -372,10 +449,11 @@ const mottoHalf = Array.from({ length: 4 }, () => mottoPhrases).flat();
     letter-spacing: -0.015em;
     max-width: 640px;
   }
+  /* min-width is set by JS to the widest word so the line never reflows */
   .cycle {
     display: inline-block;
-    position: relative;
     white-space: nowrap;
+    text-align: left;
   }
   .cycle-word {
     display: inline-block;
@@ -673,10 +751,29 @@ const mottoHalf = Array.from({ length: 4 }, () => mottoPhrases).flat();
     color: #fff;
     border: none;
     cursor: pointer;
-    margin-top: 28px;
     transition: background 0.2s ease;
   }
   .send-btn:hover { background: var(--accent); }
+  .send-btn:disabled { opacity: 0.6; cursor: default; }
+
+  .card-send {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 18px;
+    margin-top: 28px;
+  }
+  .form-status {
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.5;
+    margin: 0;
+  }
+  .form-status[data-kind='ok'] { color: var(--accent); }
+  .form-status[data-kind='err'] { color: #b4341f; }
+
+  /* honeypot — hidden from humans; bots that tick it get rejected */
+  .hp { display: none; }
 
   /* ---------- footer ---------- */
   .footer {
@@ -758,10 +855,5 @@ const mottoHalf = Array.from({ length: 4 }, () => mottoPhrases).flat();
       grid-template-columns: 72px 1fr;
     }
     .card-row--to { grid-template-columns: 72px 1fr auto; }
-  }
-
-  @keyframes word-in {
-    0% { opacity: 0; transform: translateY(10px) rotate(-3deg); }
-    100% { opacity: 1; transform: translateY(0) rotate(0deg); }
   }
 </style>

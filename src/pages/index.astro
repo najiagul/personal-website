@@ -1,267 +1,494 @@
 ---
 import Base from '../layouts/Base.astro';
 
-const work = [
+// Words that cycle through the hero's highlighted slot.
+const cycleWords = ['understand', 'trust', 'use', 'love', 'believe in'];
+
+// Scrolling motto strip. Colors cycle butter → cobalt → ink.
+const motto = ['bridge the gap', 'translate the complex', 'build with intention'];
+const mottoRun = Array.from({ length: 4 }, () => motto).flat();
+const mottoColors = ['var(--butter)', 'var(--cobalt)', 'var(--ink)'];
+
+const adventures = [
   {
-    when: '2024 — now',
-    role: 'Product Manager, SAP',
-    note: 'adoption & portfolio analytics, eval frameworks, and enabling PMs to make AI part of their everyday product work',
+    when: 'now',
+    current: true,
+    role: 'Product Manager',
+    note: 'Helping product teams do their best work, on the Product Excellence team.',
+    org: 'SAP',
   },
   {
-    when: '2022 — 24',
-    role: 'Data Scientist & AI Consultant, IBM',
-    note: 'end-to-end machine learning for enterprise clients — finding insights in their data and shipping models to production',
+    when: 'before',
+    role: 'Data Science Consultant',
+    note: 'Building AI solutions end to end, from first idea to launch.',
+    org: 'IBM',
   },
   {
-    when: '2024 — now',
-    role: 'MS Data Science & AI, Saarland University',
-    note: 'NLP, trustworthy ML, generative AI',
+    when: 'a while',
+    role: 'Technical Writer',
+    note: "Turning complex concepts into clear, compelling stories for each brand's voice.",
+    org: 'Microsoft · Meta · Red Hat · CircleCI',
   },
 ];
 
-const help = [
-  {
-    what: 'Immersion',
-    how: 'the first weeks go deep into your product, users, and metrics — so everything after rests on your context',
-  },
-  {
-    what: 'Find where users stall',
-    how: 'interviews and your own usage data, turned into a ranked list of fixes your team can start on Monday',
-  },
-  {
-    what: 'Specs that ship',
-    how: 'small, tightly scoped releases, written so engineering can start building without a clarification round',
-  },
-  {
-    what: 'Evals from day one',
-    how: 'a runnable definition of "good" for every AI feature, so "did the model update help?" takes minutes to answer — and the suite keeps working for your team long after the engagement ends',
-  },
-  {
-    what: 'Hands-on when it helps',
-    how: "I don't stay in the doc — when the team is stretched, I build alongside your engineers: prototypes, eval pipelines, the plumbing around the model",
-  },
-];
+const year = new Date().getFullYear();
 ---
 
 <Base
-  title="Najia Gul — fractional product manager for AI teams"
-  description="Product manager, former data scientist. I work with early-stage AI teams as a fractional PM — and build the evals that show whether each release helped."
+  title="Najia Gul — product, AI, storytelling"
+  description="I help teams turn complicated technology into things people can actually understand. Product manager at SAP, former data science consultant, and hobbyist writer."
 >
-  <div class="sheet">
-    <header class="fade" style="--stagger: 0">
-      <span class="ident">
-        <span class="name">Najia Gul</span>
-        <span class="where">✦ Based in Germany</span>
-      </span>
-      <nav>
-        <a href="mailto:najiagul.2000@gmail.com">email</a>
-        <a href="https://www.linkedin.com/in/najia-gul">linkedin</a>
-        <a href="https://github.com/najiagul">github</a>
-      </nav>
-    </header>
-
-    <section class="intro fade" style="--stagger: 1">
-      <div class="intro-text">
-        <h1>I work where product meets&nbsp;AI.</h1>
-        <p>
-          I'm a fractional product manager for early-stage AI teams — and a former data
-          scientist. Most AI products lose users in the gap between what people are trying to
-          do and what the product actually helps them do. My work is finding that gap, closing
-          it, and building the evals that show whether each release actually helped.
-        </p>
-      </div>
-      <figure class="polaroid">
-        <img
-          class="photo"
-          src="najia.jpg"
-          alt="Najia Gul, sitting on a park bench under green trees"
-          width="450"
-          height="600"
-        />
-      </figure>
-    </section>
-
-    <section class="fade" style="--stagger: 2">
-      <span class="label">Work</span>
-      <ul class="ledger">
-        {
-          work.map((w) => (
-            <li>
-              <span class="when">{w.when}</span>
-              <span class="entry">
-                <span class="role">{w.role}</span>
-                <span class="note">{w.note}</span>
-              </span>
-            </li>
-          ))
-        }
-      </ul>
-    </section>
-
-    <section class="fade" style="--stagger: 3">
-      <span class="label">Working together</span>
-      <ul class="ledger">
-        {
-          help.map((h) => (
-            <li>
-              <span class="when what">{h.what}</span>
-              <span class="entry">
-                <span class="note">{h.how}</span>
-              </span>
-            </li>
-          ))
-        }
-      </ul>
-    </section>
-
-    <section class="outro fade" style="--stagger: 4">
-      <span class="label">Contact</span>
-      <p>
-        Currently open to fractional engagements — write to me at
-        <a href="mailto:najiagul.2000@gmail.com">najiagul.2000@gmail.com</a>.
-      </p>
-    </section>
-
-    <footer class="fade" style="--stagger: 5">
-      <span>© {new Date().getFullYear()} Najia Gul</span>
-    </footer>
+  <!-- ============ top bar ============ -->
+  <div class="wrap topbar">
+    <a href="#top" class="wordmark">najia gul</a>
+    <nav class="topnav">
+      <a href="#about">about</a>
+      <a href="#adventures">adventures</a>
+      <a href="#now">these days</a>
+      <a href="#say-hi">say hi</a>
+    </nav>
   </div>
+
+  <!-- ============ hero ============ -->
+  <section id="top" class="wrap hero">
+    <div class="star" aria-hidden="true">
+      <div class="star-rays">
+        <svg width="128" height="128" viewBox="0 0 100 100">
+          <path
+            d="M50 2 C54 34 66 46 98 50 C66 54 54 66 50 98 C46 66 34 54 2 50 C34 46 46 34 50 2 Z"
+            fill="var(--butter)"></path>
+        </svg>
+      </div>
+      <div class="star-core">
+        <svg width="60" height="60" viewBox="0 0 100 100">
+          <path
+            d="M50 2 C54 34 66 46 98 50 C66 54 54 66 50 98 C46 66 34 54 2 50 C34 46 46 34 50 2 Z"
+            fill="var(--cobalt)"></path>
+        </svg>
+      </div>
+    </div>
+
+    <p class="eyebrow fade" style="--stagger: 0">PRODUCT · AI · STORYTELLING</p>
+
+    <h1 class="fade" style="--stagger: 1">
+      Hi, I'm Najia — I help teams turn complicated technology into things people can
+      actually <span id="cycle" class="cycle">{cycleWords[0]}</span>.
+    </h1>
+
+    <p class="lede fade" style="--stagger: 2">
+      Most of my work is translation. I close the gap between the people who build the
+      technology and the people who use it.
+    </p>
+  </section>
+
+  <!-- ============ scrolling motto ============ -->
+  <div class="mottobar" aria-hidden="true">
+    <div class="mottotrack">
+      {
+        [0, 1].map((group) => (
+          <div class="mottogroup" data-dup={group}>
+            {mottoRun.map((word, k) => (
+              <span class="mottoword" style={`color: ${mottoColors[k % mottoColors.length]}`}>
+                {word}
+                <span class="mottostar">✳</span>
+              </span>
+            ))}
+          </div>
+        ))
+      }
+    </div>
+  </div>
+
+  <!-- ============ about ============ -->
+  <section id="about" class="wrap col2 reveal">
+    <p class="colhead">a little<br />about me</p>
+    <div class="colbody">
+      <p class="lead">
+        I'm currently a product manager at <em>SAP</em>, where I help product teams achieve
+        excellence and build stronger ecosystems by bridging the gap between technical
+        capabilities and product impact.
+      </p>
+      <p class="prose">
+        Before SAP, I was a data science consultant at IBM, building AI solutions end to
+        end. I'm also a hobbyist writer — I've written whitepapers and developer guides for
+        Microsoft, Meta, Red Hat, CircleCI, and more, translating complex AI concepts into
+        clear, compelling content shaped to each brand's own voice.
+      </p>
+      <p class="prose">
+        I've spent years living at the seam where technology meets words, and I've never
+        really wanted to leave it.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ recent adventures ============ -->
+  <section id="adventures" class="wrap adventures">
+    <h2>recent adventures</h2>
+    <ul class="ledger">
+      {
+        adventures.map((a) => (
+          <li class="reveal">
+            <span class:list={['when', { current: a.current }]}>{a.when}</span>
+            <span class="entry">
+              <span class="role">{a.role}</span>
+              <span class="note">{a.note}</span>
+            </span>
+            <span class="org">{a.org}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <!-- ============ these days ============ -->
+  <section id="now" class="wrap col2 reveal">
+    <p class="colhead">these<br />days</p>
+    <div class="colbody">
+      <p class="lead">
+        I'm most interested in <em>trustworthy, safe AI</em> — particularly how it's
+        reshaping society, and what that means for all of us.
+      </p>
+      <p class="prose">
+        I'm also fascinated by startups, entrepreneurship, and the creator economy. My
+        curiosity gravitates toward any meaningful intersection of technology with other
+        disciplines, and I get easily excited by ideas that challenge conventional thinking.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ say hi / contact ============ -->
+  <section id="say-hi" class="wrap sayhi">
+    <div class="sayhi-inner reveal">
+      <h2>I'm always up for a good conversation.</h2>
+      <p>
+        Whether you're pitching an idea, hiring, or just curious about something we might
+        both find interesting — never hesitate to reach out. I'd love to hear from you.
+      </p>
+      <div class="cta">
+        <a class="btn btn-fill" href="https://www.linkedin.com/in/najia-gul">LinkedIn ↗</a>
+        <a class="btn btn-line" href="mailto:najiagul.2000@gmail.com">Email ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ footer ============ -->
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <p class="footer-line">building things with <em>intention</em>, and curiosity.</p>
+      <div class="footer-meta">
+        <div>© {year} Najia Gul</div>
+        <div>made with warmth ✳</div>
+      </div>
+    </div>
+  </footer>
 </Base>
 
 <style>
-  .sheet {
-    max-width: 680px;
-    margin: 0 auto;
-    padding: 0 26px;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
-
-  header {
+  /* ---------- top bar ---------- */
+  .topbar {
     display: flex;
     justify-content: space-between;
-    align-items: baseline;
-    padding: 34px 0;
+    align-items: center;
+    padding-block: 30px;
   }
-  .ident { display: flex; flex-direction: column; gap: 2px; }
-  .name {
-    font-family: var(--font-sans);
-    font-weight: 700;
-    font-size: 1.1rem;
-    letter-spacing: -0.005em;
+  .wordmark {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    letter-spacing: 0.04em;
+    color: var(--ink);
   }
-  .where {
+  .topnav {
+    display: flex;
+    gap: 26px;
+    font-family: var(--font-mono);
     font-size: 0.78rem;
-    color: var(--soft);
     letter-spacing: 0.02em;
   }
-  nav { display: flex; gap: 22px; }
-  nav a {
-    font-size: 0.88rem;
-    text-decoration: none;
-    color: var(--soft);
-  }
-  nav a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 4px; }
+  .topnav a { color: var(--soft-2); }
+  .topnav a:hover { color: var(--cobalt); }
 
-  .intro {
-    padding: 12vh 0 0;
-    display: flex;
-    align-items: flex-start;
-    gap: 44px;
-  }
-  .intro-text { flex: 1; }
-  /* polaroid: white card, thicker bottom lip, soft shadow, gentle tilt */
-  .polaroid {
-    flex-shrink: 0;
-    width: 196px;
-    margin-top: 8px;
-    padding: 11px 11px 34px;
-    background: #fff;
-    border: 1px solid var(--hairline);
-    box-shadow:
-      0 12px 28px rgba(26, 24, 21, 0.15),
-      0 2px 6px rgba(26, 24, 21, 0.08);
-    transform: rotate(-2.4deg);
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
-  }
-  .polaroid:hover {
-    transform: rotate(0deg) scale(1.015);
-    box-shadow:
-      0 18px 40px rgba(26, 24, 21, 0.18),
-      0 3px 8px rgba(26, 24, 21, 0.1);
-  }
-  .intro :global(.photo) {
-    width: 100%;
-    height: auto;
+  /* ---------- hero ---------- */
+  .hero {
+    padding-block: 70px 90px;
+    position: relative;
   }
   h1 {
-    font-family: var(--font-sans);
-    font-weight: 700;
-    font-size: clamp(1.9rem, 4.6vw, 2.7rem);
-    line-height: 1.14;
-    letter-spacing: -0.028em;
-    text-wrap: balance;
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(2.9rem, 6.6vw, 4.875rem);
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+    max-width: 15ch;
   }
-  .intro p {
-    margin-top: 26px;
-    font-size: 1.02rem;
+  .cycle {
+    display: inline-block;
+    position: relative;
+    white-space: nowrap;
+    color: var(--cobalt);
+    background: linear-gradient(rgba(255, 207, 71, 0.38), rgba(255, 207, 71, 0.38))
+      left bottom / 100% 0.5rem no-repeat;
+  }
+  .lede {
+    font-family: var(--font-serif);
+    font-weight: 300;
+    font-size: clamp(1.2rem, 2.4vw, 1.4375rem);
+    line-height: 1.55;
+    color: var(--soft);
+    max-width: 40ch;
+    margin-top: 34px;
+  }
+
+  /* animated star, top-right of hero */
+  .star {
+    position: absolute;
+    top: 40px;
+    right: 44px;
+    width: 128px;
+    height: 128px;
+  }
+  .star-rays,
+  .star-core {
+    position: absolute;
+    display: grid;
+    place-items: center;
+  }
+  .star-rays { inset: 0; }
+  .star-core { inset: 34px; }
+
+  /* ---------- motto marquee ---------- */
+  .mottobar {
+    border-top: 1px solid var(--hairline);
+    border-bottom: 1px solid var(--hairline);
+    padding-block: 20px;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .mottotrack {
+    display: inline-flex;
+    width: max-content;
+  }
+  .mottogroup {
+    display: inline-flex;
+    gap: 40px;
+    padding-right: 40px;
+    flex-shrink: 0;
+  }
+  .mottoword {
+    font-family: var(--font-display);
+    font-size: 1.625rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 40px;
+  }
+  .mottostar { color: #b9c0d4; }
+
+  /* ---------- two-column text sections ---------- */
+  .col2 {
+    display: grid;
+    grid-template-columns: 210px 1fr;
+    gap: 40px;
+    padding-block: 100px 40px;
+  }
+  #now.col2 { padding-block: 90px 40px; }
+  .colhead {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--cobalt);
+    padding-top: 12px;
+    line-height: 1.5;
+  }
+  .colbody { max-width: 660px; }
+  .lead {
+    font-family: var(--font-fraunces);
+    font-weight: 300;
+    font-size: clamp(1.4rem, 2.6vw, 1.6875rem);
+    line-height: 1.5;
     color: var(--ink);
-    max-width: 60ch;
+    margin-bottom: 26px;
   }
-
-  section + section { margin-top: 76px; }
-  .intro + section { margin-top: 88px; }
-
-  .ledger {
-    list-style: none;
-    margin-top: 18px;
+  .lead em {
+    font-style: italic;
+    color: var(--cobalt);
   }
+  .prose {
+    font-family: var(--font-serif);
+    font-weight: 300;
+    font-size: clamp(1.05rem, 1.6vw, 1.1875rem);
+    line-height: 1.75;
+    color: var(--soft);
+  }
+  .prose + .prose { margin-top: 20px; }
+
+  /* ---------- recent adventures ---------- */
+  .adventures { padding-block: 90px 40px; }
+  .adventures h2 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(2.4rem, 5vw, 3.25rem);
+    color: var(--ink);
+    margin-bottom: 12px;
+  }
+  .ledger { list-style: none; }
   .ledger li {
     display: grid;
-    grid-template-columns: 168px 1fr;
-    gap: 20px;
-    padding: 16px 0;
-    border-top: 1px solid var(--hairline);
+    grid-template-columns: 120px 1fr auto;
+    gap: 28px;
+    align-items: baseline;
+    padding-block: 26px;
+    border-top: 1px solid var(--hairline-strong);
   }
-  .ledger li:last-child { border-bottom: 1px solid var(--hairline); }
+  .ledger li:last-child { border-bottom: 1px solid var(--hairline-strong); }
   .when {
-    font-size: 0.88rem;
-    color: var(--soft);
-    padding-top: 2px;
-    font-variant-numeric: tabular-nums;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    color: var(--faint);
+    white-space: nowrap;
   }
-  .when.what {
-    color: var(--ink);
-    font-weight: 600;
-    font-size: 0.92rem;
-  }
+  .when.current { color: var(--cobalt); }
   .entry { display: flex; flex-direction: column; gap: 4px; }
-  .role { font-weight: 600; font-size: 0.98rem; }
-  .note { font-size: 0.92rem; color: var(--soft); max-width: 52ch; }
-
-  .outro p {
-    margin-top: 18px;
-    font-size: 1.02rem;
-    max-width: 60ch;
+  .role {
+    font-family: var(--font-fraunces);
+    font-weight: 400;
+    font-size: 1.625rem;
+    color: var(--ink);
+  }
+  .note {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1.125rem;
+    color: var(--soft-3);
+  }
+  .org {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: var(--soft);
+    text-align: right;
+    white-space: nowrap;
   }
 
-  footer {
-    margin-top: auto;
-    padding: 90px 0 36px;
+  /* ---------- say hi ---------- */
+  .sayhi {
+    padding-block: 90px 70px;
+    margin-top: 60px;
+  }
+  .sayhi-inner {
+    border-top: 1px solid var(--hairline);
+    padding-top: 70px;
+  }
+  .sayhi h2 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(2.6rem, 5.6vw, 4rem);
+    line-height: 1.05;
+    max-width: 16ch;
+    margin-bottom: 24px;
+  }
+  .sayhi p {
+    font-family: var(--font-serif);
+    font-weight: 300;
+    font-size: clamp(1.1rem, 2vw, 1.3125rem);
+    line-height: 1.6;
+    color: var(--soft);
+    max-width: 40ch;
+    margin-bottom: 40px;
+  }
+  .cta { display: flex; flex-wrap: wrap; gap: 16px; }
+  .btn {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    letter-spacing: 0.04em;
+    padding: 15px 26px;
+    border-radius: 40px;
+    transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+  }
+  .btn-fill {
+    background: var(--ink);
+    color: #fff;
+  }
+  .btn-fill:hover { background: var(--cobalt); color: #fff; }
+  .btn-line {
+    border: 1px solid rgba(22, 35, 63, 0.35);
+    color: var(--ink);
+  }
+  .btn-line:hover { border-color: var(--cobalt); color: var(--cobalt); }
+
+  /* ---------- footer ---------- */
+  .site-footer {
+    background: var(--ink);
+    color: #fff;
+    margin-top: 40px;
+  }
+  .footer-inner {
     display: flex;
     justify-content: space-between;
-    font-size: 0.82rem;
-    color: var(--soft);
+    align-items: flex-end;
+    gap: 40px;
+    flex-wrap: wrap;
+    padding-block: 80px;
+  }
+  .footer-line {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 2.625rem);
+    line-height: 1.1;
+    max-width: 12ch;
+  }
+  .footer-line em {
+    font-style: italic;
+    color: var(--butter);
+  }
+  .footer-meta {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    color: #b6a88e;
+    text-align: right;
+  }
+  .footer-meta div + div { margin-top: 8px; }
+
+  /* ---------- motion ---------- */
+  @media (prefers-reduced-motion: no-preference) {
+    :global(html.js) .star { animation: floaty 6s ease-in-out infinite; }
+    .star-rays { animation: rays 26s linear infinite; }
+    .star-core { animation: twinkle 4s ease-in-out infinite; }
+    .mottogroup { animation: marquee 80s linear infinite; }
+    :global(html.js) .cycle { animation: word-in 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
   }
 
-  @media (max-width: 560px) {
-    .intro { padding-top: 7vh; flex-direction: column-reverse; gap: 28px; }
-    .polaroid { width: 168px; margin-top: 0; }
-    section + section { margin-top: 56px; }
-    .intro + section { margin-top: 64px; }
+  /* ---------- responsive ---------- */
+  @media (max-width: 720px) {
+    .wrap { padding-inline: 24px; }
+    .star { display: none; }
+    .col2 { grid-template-columns: 1fr; gap: 12px; padding-block: 64px 32px; }
+    #now.col2 { padding-block: 56px 32px; }
+    .colhead { padding-top: 0; }
     .ledger li { grid-template-columns: 1fr; gap: 6px; }
-    .when { padding-top: 0; }
-    footer { padding-top: 64px; }
+    .org { text-align: left; }
+    .adventures { padding-block: 56px 24px; }
+    .sayhi { padding-block: 56px 56px; margin-top: 32px; }
+    .sayhi-inner { padding-top: 48px; }
+    .footer-inner { padding-block: 56px; align-items: flex-start; }
+    .footer-meta { text-align: left; }
   }
 </style>
+
+<script>
+  // Cycle the highlighted hero word, honoring reduced-motion.
+  const el = document.getElementById('cycle');
+  const words = ['understand', 'trust', 'use', 'love', 'believe in'];
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (el && !reduce) {
+    let i = 0;
+    setInterval(() => {
+      i = (i + 1) % words.length;
+      el.textContent = words[i];
+      // restart the entrance animation
+      el.style.animation = 'none';
+      void el.offsetWidth;
+      el.style.animation = '';
+    }, 2600);
+  }
+</script>

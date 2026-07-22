@@ -1,57 +1,112 @@
 /* ---------- tokens ---------- */
 :root {
-  --bg: #FFFFFF;
-  --ink: #0A0A0A;
-  --soft: #6E6E6E;
-  --hairline: #EAEAEA;
-  /* Neue Haas Grotesk is licensed; closest free match is a self-hosted
-     Helvetica clone (Arimo), consistent across devices */
-  --font-sans: 'Arimo Variable', 'Helvetica Neue', Arial, sans-serif;
-  --font-serif: var(--font-sans);
+  /* palette — "Butter & Cobalt" (design direction 1b) */
+  --paper: #ffffff;
+  --ink: #1a2340; /* deep navy, primary text */
+  --cobalt: #274bd6; /* accent, links, living words */
+  --butter: #ffcf47; /* highlight wash */
+  --soft: #48546e; /* muted body copy */
+  --soft-2: #586686; /* nav, secondary */
+  --soft-3: #697691; /* italic captions */
+  --faint: #8791a8; /* faintest labels */
+  --hairline: rgba(22, 35, 63, 0.14);
+  --hairline-strong: rgba(22, 35, 63, 0.16);
+
+  /* type — self-hosted via @fontsource (imported in Base.astro) */
+  --font-mono: 'Space Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  --font-display: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+  --font-fraunces: 'Fraunces Variable', Georgia, 'Times New Roman', serif;
+  --font-serif: 'Newsreader Variable', Georgia, 'Times New Roman', serif;
+
+  --measure: 1080px;
 }
 
 /* ---------- reset ---------- */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { height: 100%; }
+html { height: 100%; scroll-behavior: smooth; }
 body {
   min-height: 100%;
-  background: var(--bg);
+  background: var(--paper);
   color: var(--ink);
-  font-family: var(--font-sans);
+  font-family: var(--font-serif);
   font-size: 1rem;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
 }
 img, svg { max-width: 100%; display: block; }
 
-::selection { background: var(--ink); color: var(--bg); }
+::selection { background: rgba(255, 207, 71, 0.28); }
 
 a {
-  color: var(--ink);
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 3px;
-  text-decoration-color: rgba(26, 24, 21, 0.3);
+  color: var(--cobalt);
+  text-decoration: none;
 }
-a:hover { text-decoration-color: var(--ink); }
-a:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+a:hover { color: var(--ink); }
+a:focus-visible { outline: 2px solid var(--cobalt); outline-offset: 3px; border-radius: 2px; }
 
-/* small letterspaced section label */
-.label {
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.16em;
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+/* ---------- shared layout ---------- */
+.wrap {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding-inline: 40px;
+}
+
+/* small letterspaced mono label (kanzler eyebrow) */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--soft);
+  color: var(--cobalt);
 }
 
-/* single entrance fade, gated on JS + motion preference */
+/* ---------- motion primitives ----------
+   All gated on JS presence (html.js) + reduced-motion preference,
+   matching the site's progressive-enhancement pattern. */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes word-in {
+  0% { opacity: 0; transform: translateY(10px) rotate(-3deg); }
+  100% { opacity: 1; transform: translateY(0) rotate(0deg); }
+}
+@keyframes reveal {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes rays { to { transform: rotate(360deg); } }
+@keyframes twinkle {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(0.9); opacity: 0.82; }
+}
+@keyframes floaty {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
 @media (prefers-reduced-motion: no-preference) {
   html.js .fade {
     opacity: 0;
-    transform: translateY(6px);
-    animation: fade-in 0.7s ease forwards;
-    animation-delay: calc(var(--stagger, 0) * 0.1s);
+    animation: fade-up 0.8s ease both;
+    animation-delay: calc(var(--stagger, 0) * 0.12s);
   }
-  @keyframes fade-in { to { opacity: 1; transform: none; } }
+  /* scroll-driven reveal where supported, else appears immediately */
+  @supports (animation-timeline: view()) {
+    html.js .reveal {
+      animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 28%;
+    }
+  }
 }
